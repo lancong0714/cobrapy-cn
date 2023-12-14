@@ -1,0 +1,24 @@
+project:
+  type: book
+
+book:
+  title: "Cobrapy中文文档"
+  author: "lanc"
+  date: "2023/11/28"
+  chapters:
+    - index.qmd
+    - "building_model-cn.ipynb" 
+    - "configuration-cn.ipynb" 
+    - "getting_started-cn.ipynb"  
+    - "phenotype_phase_plane-cn.ipynb"
+    
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
