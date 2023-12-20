@@ -1,9 +1,5 @@
-# Preface {.unnumbered}
+# 前言 {.unnumbered}
 
-This is a Quarto book.
+这是cobra使用指南的个人中文翻译
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
-
-```{r}
-1 + 1
-```
+本人是一位才疏学浅的在读研究生，若您在阅读此文档的过程中发现任何错误或不妥之处，敬请批评指正。与此同时很高兴大家能够一起学习cobra，欢迎大家一起讨论交流！
