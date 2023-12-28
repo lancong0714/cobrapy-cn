@@ -290,15 +290,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>textbook_model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ecoli_model <span class="op">=</span> load_model(<span class="st">"iJO1366"</span>)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>logging.getLogger(<span class="st">"cobra.io.sbml"</span>).setLevel(logging.ERROR)salmonella_model <span class="op">=</span> load_model(<span class="st">"salmonella"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>mini test files: 
-/Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini_fbc2.xml, /Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini.json, /Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini_fbc1.xml, /Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini_fbc2.xml.gz, /Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini.yml, /Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini_cobra.xml, /Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini.mat, /Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini_fbc2.xml.bz2, /Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/data/mini.pickle</code></pre>
+<div class="cell-output cell-output-error">
+<pre><code>SyntaxError: invalid syntax (502675030.py, line 13)</code></pre>
 </div>
 </div>
 <section id="sbml" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sbml"><span class="header-section-number">4.1</span> SBML</h2>
-<p>The <a href="http://sbml.org">Systems Biology Markup Language</a> is an XML-based standard format for distributing models which has support for COBRA models through the <a href="http://sbml.org/Documents/Specifications/SBML_Level_3/Packages/Flux_Balance_Constraints_%28flux%29">FBC extension</a> version 2.</p>
-<p>Cobrapy has native support for reading and writing SBML with FBCv2. Please note that all id’s in the model must conform to the SBML SID requirements in order to generate a valid SBML file.</p>
+<p><a href="http://sbml.org">Systems Biology Markup Language</a> 是一种基于 XML 的标准格式，用于分发模型，它通过 <a href="http://sbml.org/Documents/Specifications/SBML_Level_3/Packages/Flux_Balance_Constraints_%28flux%29">FBC extension</a>版本 2 支持 COBRA 模型。</p>
+<p>Cobrapy 原生支持使用 FBCv2 读取和写入 SBML。请注意，模型中的所有 ID 都必须符合 SBML SID 要求，才能生成有效的 SBML 文件。</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mini_fbc2_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini_fbc2.xml"</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>read_sbml_model(<span class="bu">str</span>(mini_fbc2_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
