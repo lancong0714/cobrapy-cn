@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Cobrapy中文文档",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2"
+    "text": "前言\n这是cobra使用指南的个人中文翻译\n本人是一位才疏学浅的在读研究生，若您在阅读此文档的过程中发现任何错误或不妥之处，敬请批评指正。与此同时很高兴大家能够一起学习cobra，欢迎大家一起讨论交流！"
   },
   {
     "objectID": "getting_started-cn.html#加载模型并检查它",

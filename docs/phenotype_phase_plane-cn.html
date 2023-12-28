@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Cobrapy中文文档 - 11&nbsp; 一致性测试</title>
+<title>Cobrapy中文文档 - 7&nbsp; 生长包线</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./media-cn.html" rel="next">
-<link href="./gapfilling-cn.html" rel="prev">
+<link href="./sampling-cn.html" rel="next">
+<link href="./deletions-cn.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -94,9 +94,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -109,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./consistency-cn.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">一致性测试</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./phenotype_phase_plane-cn.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">生长包线</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -178,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./phenotype_phase_plane-cn.html" class="sidebar-item-text sidebar-link">
+  <a href="./phenotype_phase_plane-cn.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">生长包线</span></span></a>
   </div>
 </li>
@@ -202,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./consistency-cn.html" class="sidebar-item-text sidebar-link active">
+  <a href="./consistency-cn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">一致性测试</span></span></a>
   </div>
 </li>
@@ -242,21 +243,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#使用-fva" id="toc-使用-fva" class="nav-link active" data-scroll-target="#使用-fva"><span class="header-section-number">11.1</span> 使用 FVA</a></li>
-  <li><a href="#使用fastcc" id="toc-使用fastcc" class="nav-link" data-scroll-target="#使用fastcc"><span class="header-section-number">11.2</span> 使用FASTCC</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">一致性测试</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">生长包线</span></h1>
 </div>
 
 
@@ -271,82 +265,206 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>对于大多数问题，多个磁通状态可以达到相同的最优，因此我们试图获得一致的网络。我们的意思是，网络中将存在多个阻塞反应，从而导致这种不一致。为解决这个问题，我们使用的算法可以检测所有被阻断的反应，并为我们提供一致的网络。</p>
-<p>Let us take a toy network, like so:</p>
-<p><span class="math display">\[\begin{align}
-v_1 &amp;: {} \rightarrow 2A \\
-v_2 &amp;: A \leftrightarrow B \\
-v_3 &amp;: A \rightarrow D \\
-v_4 &amp;: A \rightarrow C \\
-v_5 &amp;: C \rightarrow D \\
-v_6 &amp;: D \rightarrow
-\end{align}\]</span></p>
-<p>Here, <span class="math inline">\(v_{x}\)</span>, where <span class="math inline">\(x \in \{1, 2, \ldots, 6\}\)</span> represent the flux carried by the reactions as shown above.</p>
+<p>生长包线（又名表型相平面）将显示出不同的最佳生长阶段，使用两种不同的底物。有关详细信息，请参阅 <a href="http://dx.doi.org/10.1002/bit.10047">Edwards et al.</a></p>
+<p>Cobrapy 支持计算这些Production envelopes，并且可以使用您喜欢的绘图包轻松绘制它们。在这里，我们将为“教科书”制作一个_E.coli_核心模型，并演示使用<a href="http://matplotlib.org/">matplotlib</a>.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cobra</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.flux_analysis <span class="im">import</span> production_envelope</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>test_model <span class="op">=</span> cobra.Model(<span class="st">"test_model"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>v1 <span class="op">=</span> cobra.Reaction(<span class="st">"v1"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>v2 <span class="op">=</span> cobra.Reaction(<span class="st">"v2"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>v3 <span class="op">=</span> cobra.Reaction(<span class="st">"v3"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>v4 <span class="op">=</span> cobra.Reaction(<span class="st">"v4"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>v5 <span class="op">=</span> cobra.Reaction(<span class="st">"v5"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>v6 <span class="op">=</span> cobra.Reaction(<span class="st">"v6"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>test_model.add_reactions([v1, v2, v3, v4, v5, v6])</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>v1.reaction <span class="op">=</span> <span class="st">"-&gt; 2 A"</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>v2.reaction <span class="op">=</span> <span class="st">"A &lt;-&gt; B"</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>v3.reaction <span class="op">=</span> <span class="st">"A -&gt; D"</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>v4.reaction <span class="op">=</span> <span class="st">"A -&gt; C"</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>v5.reaction <span class="op">=</span> <span class="st">"C -&gt; D"</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>v6.reaction <span class="op">=</span> <span class="st">"D -&gt;"</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>v1.bounds <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">3.0</span>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>v2.bounds <span class="op">=</span> (<span class="op">-</span><span class="fl">3.0</span>, <span class="fl">3.0</span>)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>v3.bounds <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">3.0</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>v4.bounds <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">3.0</span>)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>v5.bounds <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">3.0</span>)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>v6.bounds <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">3.0</span>)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>test_model.objective <span class="op">=</span> v6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>unknown metabolite 'A' created
-unknown metabolite 'B' created
-unknown metabolite 'D' created
-unknown metabolite 'C' created</code></pre>
+<p>我们想制作一个表型相平面来评估葡萄糖和氧气的摄取。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>prod_env <span class="op">=</span> production_envelope(model, [<span class="st">"EX_glc__D_e"</span>, <span class="st">"EX_o2_e"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<section id="使用-fva" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="使用-fva"><span class="header-section-number">11.1</span> 使用 FVA</h2>
-<p>我们可以遵循的第一种方法是使用 FVA（通量可变性分析），在许多其他应用中，它用于检测阻塞反应。 <code>cobra.flux_analysis.find_blocked_reactions()</code> 函数将返回使用 FVA 获得的所有被阻止反应的列表。</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cobra.flux_analysis.find_blocked_reactions(test_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-scrolled="true" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prod_env.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>['v2']</code></pre>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">carbon_source</th>
+<th data-quarto-table-cell-role="th">flux_minimum</th>
+<th data-quarto-table-cell-role="th">carbon_yield_minimum</th>
+<th data-quarto-table-cell-role="th">mass_yield_minimum</th>
+<th data-quarto-table-cell-role="th">flux_maximum</th>
+<th data-quarto-table-cell-role="th">carbon_yield_maximum</th>
+<th data-quarto-table-cell-role="th">mass_yield_maximum</th>
+<th data-quarto-table-cell-role="th">EX_glc__D_e</th>
+<th data-quarto-table-cell-role="th">EX_o2_e</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>NaN</td>
+<td>0.000000</td>
+<td>1.750832e-14</td>
+<td>NaN</td>
+<td>-10.0</td>
+<td>-60.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>NaN</td>
+<td>0.072244</td>
+<td>1.310050e+00</td>
+<td>NaN</td>
+<td>-10.0</td>
+<td>-56.842105</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>NaN</td>
+<td>0.144488</td>
+<td>2.620100e+00</td>
+<td>NaN</td>
+<td>-10.0</td>
+<td>-53.684211</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>NaN</td>
+<td>0.216732</td>
+<td>3.930150e+00</td>
+<td>NaN</td>
+<td>-10.0</td>
+<td>-50.526316</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>NaN</td>
+<td>0.288975</td>
+<td>5.240200e+00</td>
+<td>NaN</td>
+<td>-10.0</td>
+<td>-47.368421</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
-<p>As we see above, we are able to obtain the blocked reaction, which in this case is <span class="math inline">\(v_2\)</span>. 正如上述所示，我们能够通过在本例中的 <span class="math inline">\(v_2\)</span>，来获得阻断反应。</p>
-</section>
-<section id="使用fastcc" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="使用fastcc"><span class="header-section-number">11.2</span> 使用FASTCC</h2>
-<p>在<code>cobrapy</code>中获得一致网络的第二种方法是使用 FASTCC。使用这种方法，您可以期望有效地获得准确一致的网络。有关该算法的更多详细信息，请参阅<a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003424">Vlassis N, Pacheco MP, Sauter T (2014)</a>.</p>
+</div>
+<p>如果我们指定碳源，我们也可以得到碳和质量产量。例如，暂时将目标设置为生产醋酸纤维，我们可以得到如下Production envelopes并且使用pandas来快速绘制结果。</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>consistent_model <span class="op">=</span> cobra.flux_analysis.fastcc(test_model)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>consistent_model.reactions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>[&lt;Reaction v1 at 0x7fc71ddea5c0&gt;,
- &lt;Reaction v3 at 0x7fc71ddea630&gt;,
- &lt;Reaction v4 at 0x7fc71ddea668&gt;,
- &lt;Reaction v5 at 0x7fc71ddea6a0&gt;,
- &lt;Reaction v6 at 0x7fc71ddea6d8&gt;]</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>prod_env <span class="op">=</span> production_envelope(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    model, [<span class="st">"EX_o2_e"</span>], objective<span class="op">=</span><span class="st">"EX_ac_e"</span>, carbon_sources<span class="op">=</span><span class="st">"EX_glc__D_e"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>与 FVA 方法类似，我们能够确定 <span class="math inline">\(v_2\)</span> 确实是阻断反应。</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prod_env.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
 
 
-</section>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">carbon_source</th>
+<th data-quarto-table-cell-role="th">flux_minimum</th>
+<th data-quarto-table-cell-role="th">carbon_yield_minimum</th>
+<th data-quarto-table-cell-role="th">mass_yield_minimum</th>
+<th data-quarto-table-cell-role="th">flux_maximum</th>
+<th data-quarto-table-cell-role="th">carbon_yield_maximum</th>
+<th data-quarto-table-cell-role="th">mass_yield_maximum</th>
+<th data-quarto-table-cell-role="th">EX_o2_e</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>-60.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.578947</td>
+<td>0.052632</td>
+<td>0.051748</td>
+<td>-56.842105</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>3.157895</td>
+<td>0.105263</td>
+<td>0.103496</td>
+<td>-53.684211</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>4.736842</td>
+<td>0.157895</td>
+<td>0.155245</td>
+<td>-50.526316</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>EX_glc__D_e</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>6.315789</td>
+<td>0.210526</td>
+<td>0.206993</td>
+<td>-47.368421</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>prod_env.plot(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">'line'</span>, x<span class="op">=</span><span class="st">'EX_o2_e'</span>, y<span class="op">=</span><span class="st">'carbon_yield_maximum'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="phenotype_phase_plane-cn_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>以前版本的 cobrapy 包括更多定制的相平面图，现在已被删除，以提高可维护性并增强 cobrapy 的焦点。cobra模型的绘图适用于另一个包。</p>
+
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -584,13 +702,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./gapfilling-cn.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">缺口填充</span></span>
+      <a href="./deletions-cn.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">模拟删除</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./media-cn.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">生长培养基</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sampling-cn.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">通量取样</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

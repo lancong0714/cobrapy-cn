@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Cobrapy中文文档 - 2&nbsp; 全局配置</title>
+<title>Cobrapy中文文档 - 15&nbsp; 在COBRApy动态通量平衡分析(dFBA)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./building_model-cn.html" rel="next">
-<link href="./getting_started-cn.html" rel="prev">
+<link href="./faq-cn.html" rel="next">
+<link href="./constraints_objectives-cn.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -94,9 +94,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -110,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./configuration-cn.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">全局配置</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dfba-cn.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">在COBRApy动态通量平衡分析(dFBA)</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -149,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./configuration-cn.html" class="sidebar-item-text sidebar-link active">
+  <a href="./configuration-cn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">全局配置</span></span></a>
   </div>
 </li>
@@ -227,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dfba-cn.html" class="sidebar-item-text sidebar-link">
+  <a href="./dfba-cn.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">在COBRApy动态通量平衡分析(dFBA)</span></span></a>
   </div>
 </li>
@@ -247,12 +244,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#配置对象" id="toc-配置对象" class="nav-link active" data-scroll-target="#配置对象"><span class="header-section-number">2.1</span> 配置对象</a></li>
-  <li><a href="#反应边界" id="toc-反应边界" class="nav-link" data-scroll-target="#反应边界"><span class="header-section-number">2.2</span> 反应边界</a>
-  <ul class="collapse">
-  <li><a href="#更改边界" id="toc-更改边界" class="nav-link" data-scroll-target="#更改边界"><span class="header-section-number">2.2.1</span> 更改边界</a></li>
-  </ul></li>
-  <li><a href="#solver" id="toc-solver" class="nav-link" data-scroll-target="#solver"><span class="header-section-number">2.3</span> Solver</a></li>
+  <li><a href="#建立动态系统" id="toc-建立动态系统" class="nav-link active" data-scroll-target="#建立动态系统"><span class="header-section-number">15.1</span> 建立动态系统</a></li>
+  <li><a href="#运行动态fba模拟" id="toc-运行动态fba模拟" class="nav-link" data-scroll-target="#运行动态fba模拟"><span class="header-section-number">15.2</span> 运行动态FBA模拟</a></li>
   </ul>
 </nav>
     </div>
@@ -261,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">全局配置</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">在COBRApy动态通量平衡分析(dFBA)</span></h1>
 </div>
 
 
@@ -276,216 +269,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>在 cobra &gt; 0.13.4 中，我们引入了一个全局配置对象。现在，您可以配置默认的反应边界和优化求解器，新创建的反应和模型将遵循这些求解器。</p>
-<section id="配置对象" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="配置对象"><span class="header-section-number">2.1</span> 配置对象</h2>
-<p>您可以通过以下方式获取配置对象 1：</p>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cobra</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>下面的笔记本展示了一个使用COBRApy和<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">scipy.integrate.solve_ivp</a>. 实现dFBA的简单但缓慢的示例。本手册展示了一个静态优化方法(SOA)实现，不应将其视为已准备就绪的产品。该模型只考虑了基本的Michaelis-Menten对葡萄糖的限制生长。</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cobra_config <span class="op">=</span> cobra.Configuration()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ModuleNotFoundError: No module named 'tqdm'</code></pre>
 </div>
-<p>1配置对象是单例。这意味着只能存在一个实例，并且在 COBRApy 中到处都被接受。</p>
-</section>
-<section id="反应边界" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="反应边界"><span class="header-section-number">2.2</span> 反应边界</h2>
-<p>该对象具有以下属性，你可以检查这些属性，也可以根据需要进行更改。</p>
+</div>
+<p>创建或加载一个网格模型。在这里，我们使用“教科书”大肠杆菌核心模型。</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cobra_config.lower_bound</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>-1000.0</code></pre>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cobra</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">'textbook'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
+<section id="建立动态系统" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="建立动态系统"><span class="header-section-number">15.1</span> 建立动态系统</h2>
+<p>动态通量平衡分析将细胞外浓度的动态系统与伪稳态代谢模型耦合在一起。在本手册中，我们定义了<code>add_dynamic_bounds(model, y)</code>函数，即将外部代谢物浓度转换为代谢模型中边界通量的边界</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cobra_config.upper_bound</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>1000.0</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_dynamic_bounds(model, y):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Use external concentrations to bound the uptake flux of glucose."""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    biomass, glucose <span class="op">=</span> y  <span class="co"># expand the boundary species</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    glucose_max_import <span class="op">=</span> <span class="op">-</span><span class="dv">10</span> <span class="op">*</span> glucose <span class="op">/</span> (<span class="dv">5</span> <span class="op">+</span> glucose)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    model.reactions.EX_glc__D_e.lower_bound <span class="op">=</span> glucose_max_import</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dynamic_system(t, y):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the time derivative of external species."""</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    biomass, glucose <span class="op">=</span> y  <span class="co"># expand the boundary species</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the specific exchanges fluxes at the given external concentrations.</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        add_dynamic_bounds(model, y)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        cobra.util.add_lp_feasibility(model)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        feasibility <span class="op">=</span> cobra.util.fix_objective_as_constraint(model)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        lex_constraints <span class="op">=</span> cobra.util.add_lexicographic_constraints(</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            model, [<span class="st">'Biomass_Ecoli_core'</span>, <span class="st">'EX_glc__D_e'</span>], [<span class="st">'max'</span>, <span class="st">'max'</span>])</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Since the calculated fluxes are specific rates, we multiply them by the</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># biomass concentration to get the bulk exchange rates.</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    fluxes <span class="op">=</span> lex_constraints.values</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    fluxes <span class="op">*=</span> biomass</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This implementation is **not** efficient, so I display the current</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simulation time using a progress bar.</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dynamic_system.pbar <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        dynamic_system.pbar.update(<span class="dv">1</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        dynamic_system.pbar.set_description(<span class="st">'t = </span><span class="sc">{:.3f}</span><span class="st">'</span>.<span class="bu">format</span>(t))</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fluxes</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>dynamic_system.pbar <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> infeasible_event(t, y):</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">    Determine solution feasibility.</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">    Avoiding infeasible solutions is handled by solve_ivp's built-in event detection.</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">    This function re-solves the LP to determine whether or not the solution is feasible</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">    (and if not, how far it is from feasibility). When the sign of this function changes</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">    from -epsilon to positive, we know the solution is no longer feasible.</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        add_dynamic_bounds(model, y)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        cobra.util.add_lp_feasibility(model)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        feasibility <span class="op">=</span> cobra.util.fix_objective_as_constraint(model)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> feasibility <span class="op">-</span> infeasible_event.epsilon</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>infeasible_event.epsilon <span class="op">=</span> <span class="fl">1E-6</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>infeasible_event.direction <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>infeasible_event.terminal <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="运行动态fba模拟" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="运行动态fba模拟"><span class="header-section-number">15.2</span> 运行动态FBA模拟</h2>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">100</span>)  <span class="co"># Desired integration resolution and interval</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y0 <span class="op">=</span> [<span class="fl">0.1</span>, <span class="dv">10</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tqdm() <span class="im">as</span> pbar:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    dynamic_system.pbar <span class="op">=</span> pbar</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        fun<span class="op">=</span>dynamic_system,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        events<span class="op">=</span>[infeasible_event],</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        t_span<span class="op">=</span>(ts.<span class="bu">min</span>(), ts.<span class="bu">max</span>()),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        y0<span class="op">=</span>y0,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>ts,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        rtol<span class="op">=</span><span class="fl">1e-6</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        atol<span class="op">=</span><span class="fl">1e-8</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        method<span class="op">=</span><span class="st">'BDF'</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>t = 5.804: : 185it [00:05, 34.89it/s]</code></pre>
 </div>
 </div>
+<p>因为培养物的葡萄糖耗尽，模拟提前终止。这个“细胞死亡”的确切时间记录在<code>sol.t_events</code>。</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cobra_config.bounds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>(-1000.0, 1000.0)</code></pre>
-</div>
-</div>
-<section id="更改边界" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="更改边界"><span class="header-section-number">2.2.1</span> 更改边界</h3>
-<p>你可在反应前修改并使用这些值。</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cobra_config.bounds <span class="op">=</span> <span class="op">-</span><span class="dv">10</span>, <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cobra.Reaction(<span class="st">"R1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sol</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><strong>Reaction identifier</strong></td>
-<td>R1</td>
-</tr>
-<tr class="even">
-<td><strong>Name</strong></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>Memory address</strong></td>
-<td>0x7f8642e5bba8</td>
-</tr>
-<tr class="even">
-<td><strong>Stoichiometry</strong></td>
-<td><p>--&gt;</p>
-<p>--&gt;</p></td>
-</tr>
-<tr class="odd">
-<td><strong>GPR</strong></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Lower bound</strong></td>
-<td>0.0</td>
-</tr>
-<tr class="odd">
-<td><strong>Upper bound</strong></td>
-<td>20</td>
-</tr>
-</tbody>
-</table>
-
-        
+<pre><code>  message: 'A termination event occurred.'
+     nfev: 179
+     njev: 2
+      nlu: 14
+      sol: None
+   status: 1
+  success: True
+        t: array([0.        , 0.15151515, 0.3030303 , 0.45454545, 0.60606061,
+       0.75757576, 0.90909091, 1.06060606, 1.21212121, 1.36363636,
+       1.51515152, 1.66666667, 1.81818182, 1.96969697, 2.12121212,
+       2.27272727, 2.42424242, 2.57575758, 2.72727273, 2.87878788,
+       3.03030303, 3.18181818, 3.33333333, 3.48484848, 3.63636364,
+       3.78787879, 3.93939394, 4.09090909, 4.24242424, 4.39393939,
+       4.54545455, 4.6969697 , 4.84848485, 5.        , 5.15151515,
+       5.3030303 , 5.45454545, 5.60606061, 5.75757576])
+ t_events: [array([5.80191035])]
+        y: array([[ 0.1       ,  0.10897602,  0.11871674,  0.12927916,  0.14072254,
+         0.15310825,  0.16649936,  0.18095988,  0.19655403,  0.21334507,
+         0.23139394,  0.25075753,  0.27148649,  0.29362257,  0.31719545,
+         0.34221886,  0.36868605,  0.3965646 ,  0.42579062,  0.4562623 ,
+         0.48783322,  0.52030582,  0.55342574,  0.58687742,  0.62028461,
+         0.65321433,  0.685188  ,  0.71570065,  0.74425054,  0.77037369,
+         0.79368263,  0.81390289,  0.83089676,  0.84467165,  0.85535715,
+         0.8631722 ,  0.86843813,  0.8715096 ,  0.8727423 ],
+       [10.        ,  9.8947027 ,  9.78040248,  9.65642157,  9.52205334,
+         9.37656372,  9.21919615,  9.04917892,  8.86573366,  8.6680879 ,
+         8.45549026,  8.22722915,  7.98265735,  7.72122137,  7.442497  ,
+         7.14623236,  6.83239879,  6.50124888,  6.15338213,  5.78981735,
+         5.41206877,  5.02222068,  4.62299297,  4.21779303,  3.81071525,
+         3.40650104,  3.01042208,  2.6280723 ,  2.26504645,  1.92656158,
+         1.61703023,  1.33965598,  1.09616507,  0.88670502,  0.70995892,
+         0.56344028,  0.44387781,  0.34762375,  0.27100065]])
+ y_events: [array([[0.87280538, 0.25178492]])]</code></pre>
 </div>
 </div>
-<p>请注意，默认情况下，反应是不可逆的。你可以通过取消设置下限参数来更改此行为。</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cobra.Reaction(<span class="st">"R2"</span>, lower_bound<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><strong>Reaction identifier</strong></td>
-<td>R2</td>
-</tr>
-<tr class="even">
-<td><strong>Name</strong></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>Memory address</strong></td>
-<td>0x7f8642e5bda0</td>
-</tr>
-<tr class="even">
-<td><strong>Stoichiometry</strong></td>
-<td><p>&lt;=&gt;</p>
-<p>&lt;=&gt;</p></td>
-</tr>
-<tr class="odd">
-<td><strong>GPR</strong></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Lower bound</strong></td>
-<td>-10</td>
-</tr>
-<tr class="odd">
-<td><strong>Upper bound</strong></td>
-<td>20</td>
-</tr>
-</tbody>
-</table>
-
-        
+<p>###绘制生物量和葡萄糖的时间表</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.subplot(<span class="dv">111</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ax.plot(sol.t, sol.y.T[:, <span class="dv">0</span>])</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> plt.twinx(ax)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ax2.plot(sol.t, sol.y.T[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Biomass'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Glucose'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>Text(0, 0.5, 'Glucose')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="dfba-cn_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<p>注意：大多数模型都明确定义了反应边界，该边界优先于配置的值。</p>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model.reactions.ACt2r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><strong>Reaction identifier</strong></td>
-<td>ACt2r</td>
-</tr>
-<tr class="even">
-<td><strong>Name</strong></td>
-<td>R acetate reversible transport via proton - symport</td>
-</tr>
-<tr class="odd">
-<td><strong>Memory address</strong></td>
-<td>0x239dae80070</td>
-</tr>
-<tr class="even">
-<td><strong>Stoichiometry</strong></td>
-<td><p>ac_e + h_e &lt;=&gt; ac_c + h_c</p>
-<p>Acetate + H+ &lt;=&gt; Acetate + H+</p></td>
-</tr>
-<tr class="odd">
-<td><strong>GPR</strong></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Lower bound</strong></td>
-<td>-1000.0</td>
-</tr>
-<tr class="odd">
-<td><strong>Upper bound</strong></td>
-<td>1000.0</td>
-</tr>
-</tbody>
-</table>
-
-        
-</div>
-</div>
-</section>
-</section>
-<section id="solver" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="solver"><span class="header-section-number">2.3</span> Solver</h2>
-<p>你可以通过新实例化模型来定义默认求解器。默认求解器取决于您的环境。为了测试 Gurobi、CPLEX 和 GLPK 的可用性。假定 GLPK 始终存在于环境中。</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model.solver</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>&lt;optlang.glpk_interface.Model at 0x7f8642e740f0&gt;</code></pre>
-</div>
-</div>
-<p>更改Solver</p>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cobra_config.solver <span class="op">=</span> <span class="st">"glpk_exact"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>new_model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>new_model.solver</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<pre><code>&lt;optlang.glpk_exact_interface.Model at 0x7f8643112a90&gt;</code></pre>
-</div>
-</div>
-<p>更改全局配置值在工作会话开始时最有用。</p>
 
 
 </section>
@@ -726,13 +672,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./getting_started-cn.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">快速上手指南</span></span>
+      <a href="./constraints_objectives-cn.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">量身定制的约束、变量和目标</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./building_model-cn.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">构建模型</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./faq-cn.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">常见问题解答</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
