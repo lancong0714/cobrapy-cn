@@ -276,11 +276,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="约束" class="level2" data-number="14.1">
 <h2 data-number="14.1" class="anchored" data-anchor-id="约束"><span class="header-section-number">14.1</span> 约束</h2>
 <p>假设我们想确保两个反应在模型中有相同的通量。我们可以使用optlang求解器接口将这些标准作为约束添加到模型中，方法是简单地定义相关表达式，如下所示。</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:06:44.551618Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:06:42.316528400Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">'textbook'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:06:44.614919400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:06:44.556618100Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>same_flux <span class="op">=</span> model.problem.Constraint(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    model.reactions.FBA.flux_expression <span class="op">-</span> model.reactions.NH4t.flux_expression,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    lb<span class="op">=</span><span class="dv">0</span>,</span>
@@ -288,23 +288,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>model.add_cons_vars(same_flux)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们感兴趣的反应的通量由<code>model.reactions.FBA.flux_expression</code>获得，它只是正向和反向通量的总和，即，</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:06:44.710687200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:06:44.618919300Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model.reactions.FBA.flux_expression</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>1.0*FBA - 1.0*FBA_reverse_84806</code></pre>
 </div>
 </div>
 <p>现在我可以最大限度地提高生长速度，而反应“FBA”和“NH4t”的通量被限制为(接近)相同。</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:06:46.899327500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:06:46.892004400Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> model.optimize()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(solution.fluxes[<span class="st">'FBA'</span>], solution.fluxes[<span class="st">'NH4t'</span>],</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      solution.objective_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>4.662749047738151 4.662749047738149 0.855110960926157</code></pre>
+<pre><code>4.662749047738146 4.662749047738147 0.8551109609261567</code></pre>
 </div>
 </div>
 <p>也可以一次添加许多约束。对于大型模型，约束涉及许多反应，有效的方法是首先为每个通量构建线性系数字典，然后立即添加约束。例如，假设我们想对网络中每个通量的绝对值之和添加一个约束，使其小于 100：</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:06:48.297544600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:06:48.286614200Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>coefficients <span class="op">=</span> <span class="bu">dict</span>()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> rxn <span class="kw">in</span> model.reactions:</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    coefficients[rxn.forward_variable] <span class="op">=</span> <span class="fl">1.</span></span>
@@ -318,20 +318,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="对象" class="level2" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="对象"><span class="header-section-number">14.2</span> 对象</h2>
 <p>简单的目标，例如通过一个或多个反应使通量最大化，只需简单即可完成赋值给 <code>model.objective</code>属性，正如我们在前几章中看到的那样，例如，</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:06:50.562964800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:06:50.381228500Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">'textbook'</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model:</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    model.objective <span class="op">=</span> {model.reactions.Biomass_Ecoli_core: <span class="dv">1</span>}</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    model.optimize()</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(model.reactions.Biomass_Ecoli_core.flux)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.8739215069684307</code></pre>
+<pre><code>0.8739215069684279</code></pre>
 </div>
 </div>
 <p>目标数学表达式由下式表示</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:06:52.088852300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:06:52.054786Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model.objective.expression</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>1.0*Biomass_Ecoli_core - 1.0*Biomass_Ecoli_core_reverse_2cdba</code></pre>
 </div>
 </div>
@@ -353,7 +353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span class="math inline">\(y \ge 0\)</span></p>
 </blockquote>
 <p>This (admittedly very artificial) problem can be visualized graphically where the optimum is indicated by the blue dot on the line of feasible solutions.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:06:56.207598200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:06:54.171414600Z&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plot_helper</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -363,60 +363,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>我们回到教科书模型，并将求解器设置为可以处理二次目标(如complex)的求解器。然后我们加上线性约束x和y反应的和，我们设为FBA和NH4t，必须等于2。</p>
-<div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model.solver <span class="op">=</span> <span class="st">'cplex'</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sum_two <span class="op">=</span> model.problem.Constraint(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    model.reactions.FBA.flux_expression <span class="op">+</span> model.reactions.NH4t.flux_expression,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    lb<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    ub<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>model.add_cons_vars(sum_two)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:07:20.524882600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:07:20.467951700Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optlang</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model.solver <span class="op">=</span> <span class="st">'cplex'</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sum_two <span class="op">=</span> model.problem.Constraint(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    model.reactions.FBA.flux_expression <span class="op">+</span> model.reactions.NH4t.flux_expression,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    lb<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    ub<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>model.add_cons_vars(sum_two)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>SolverNotFound: cplex is not a valid solver interface. Pick one from glpk_exact, glpk, scipy.</code></pre>
+</div>
 </div>
 <p>接下来我们添加二次目标</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>quadratic_objective <span class="op">=</span> model.problem.Objective(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.5</span> <span class="op">*</span> model.reactions.NH4t.flux_expression<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    model.reactions.FBA.flux_expression<span class="op">**</span><span class="dv">2</span> <span class="op">-</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    model.reactions.FBA.flux_expression,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'min'</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>model.objective <span class="op">=</span> quadratic_objective</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> model.optimize(objective_sense<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>quadratic_objective <span class="op">=</span> model.problem.Objective(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.5</span> <span class="op">*</span> model.reactions.NH4t.flux_expression<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    model.reactions.FBA.flux_expression<span class="op">**</span><span class="dv">2</span> <span class="op">-</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    model.reactions.FBA.flux_expression,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'min'</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>model.objective <span class="op">=</span> quadratic_objective</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> model.optimize(objective_sense<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>AttributeError: 'SwigPyObject' object has no attribute 'Objective'</code></pre>
 </div>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(solution.fluxes[<span class="st">'NH4t'</span>], solution.fluxes[<span class="st">'FBA'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(solution.fluxes[<span class="st">'NH4t'</span>], solution.fluxes[<span class="st">'FBA'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.5 1.5</code></pre>
+<pre><code>4.662749047738147 4.662749047738146</code></pre>
 </div>
 </div>
 </section>
 <section id="变量" class="level2" data-number="14.3">
 <h2 data-number="14.3" class="anchored" data-anchor-id="变量"><span class="header-section-number">14.3</span> 变量</h2>
 <p>我们还可以创建额外的变量，以方便研究新的约束和变量的影响。假设我们想研究氮和碳吸收之间的通量差异，同时我们阻止其他反应。为此，添加另一个表示这种差异的变量可能会有所帮助。</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">'textbook'</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>difference <span class="op">=</span> model.problem.Variable(<span class="st">'difference'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:07:28.360636600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:07:28.187680700Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">'textbook'</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>difference <span class="op">=</span> model.problem.Variable(<span class="st">'difference'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们使用约束来定义这个变量应采用什么值</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>constraint <span class="op">=</span> model.problem.Constraint(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    model.reactions.EX_glc__D_e.flux_expression <span class="op">-</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    model.reactions.EX_nh4_e.flux_expression <span class="op">-</span> difference,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    lb<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    ub<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>model.add_cons_vars([difference, constraint])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:07:33.854630200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:07:33.848065700Z&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>constraint <span class="op">=</span> model.problem.Constraint(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    model.reactions.EX_glc__D_e.flux_expression <span class="op">-</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    model.reactions.EX_nh4_e.flux_expression <span class="op">-</span> difference,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    lb<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    ub<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>model.add_cons_vars([difference, constraint])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>现在，我们可以通过查看其原始值，在敲除探索期间直接访问该差异。</p>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> reaction <span class="kw">in</span> model.reactions[:<span class="dv">5</span>]:</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        reaction.knock_out()</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        model.optimize()</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(model.solver.variables.difference.primal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:07:37.106749100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:07:37.097963400Z&quot;}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> reaction <span class="kw">in</span> model.reactions[:<span class="dv">5</span>]:</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        reaction.knock_out()</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        model.optimize()</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(model.solver.variables.difference.primal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>-5.234680806802513
--5.234680806802513
--5.234680806802513
--0.9322222222222226
--0.9322222222222231</code></pre>
+<pre><code>-5.234680806802557
+-5.234680806802542
+-5.234680806802542
+-10.000000000000028
+-10.0</code></pre>
 </div>
 </div>
 

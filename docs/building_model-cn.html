@@ -94,9 +94,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -280,10 +277,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>我们将使用 STM_1.0 模型中的“3OAS140”反应：</p>
 <p>1.0 malACP[c] + 1.0 h[c] + 1.0 ddcaACP[c] 1.0 CO2[c] + 1.0 ACP[c] + 1.0 3omrsACP[c]</p>
 <p>首先，创建模型和反应。</p>
-<div class="cell" data-editable="true" data-execution_count="2">
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T08:57:22.438677300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T08:57:22.424801800Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra <span class="im">import</span> Model, Reaction, Metabolite</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="3">
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T08:57:22.443940400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T08:57:22.431803600Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model(<span class="st">'example_model'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>reaction <span class="op">=</span> Reaction(<span class="st">'R_3OAS140'</span>)</span>
@@ -293,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>reaction.upper_bound <span class="op">=</span> <span class="fl">1000.</span>  <span class="co"># This is the default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们也需要创造代谢物。如果我们使用现有模型“Model.get_by_id”来获得适当的代谢物对象。</p>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="4">
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:00:47.897420800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:00:47.861031700Z&quot;}" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ACP_c <span class="op">=</span> Metabolite(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ACP_c'</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    formula<span class="op">=</span><span class="st">'C11H21N2O7PRS'</span>,</span>
@@ -320,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>旁注：SId</p>
 <p>强烈建议反应、代谢物和基因的 ID 是有效的 SBML 标识符 （SId）。SId 是从基本 XML 类型字符串派生的数据类型，但对允许的字符以及这些字符可能出现的顺序有限制letter ::= ’a’..’z’,’A’..’Z’ digit ::= ’0’..’9’ idChar ::= letter | digit | ’<em>’ SId ::= ( letter | ’</em>’ ) idChar<em>idChar</em> 主要限制是 id 不能以数字开头。使用 SIds 允许序列化到 SBML。此外，通过点语法进行代码补全和对象访问等功能将在 cobrapy 中工作。</p>
 <p>使用代谢物及其化学计量系数的字典可将代谢物添加到反应中。一组代谢物可以一次全部添加，也可以一次添加一个。</p>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="4">
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:00:53.293171800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:00:53.244638Z&quot;}" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>reaction.add_metabolites({</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    malACP_c: <span class="op">-</span><span class="fl">1.0</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    h_c: <span class="op">-</span><span class="fl">1.0</span>,</span>
@@ -331,68 +328,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>reaction.reaction  <span class="co"># This gives a string representation of the reaction</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>'ddcaACP_c + h_c + malACP_c --&gt; ACP_c + M3omrsACP_c + co2_c'</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>'2.0 ddcaACP_c + 2.0 h_c + 2.0 malACP_c --&gt; 2.0 ACP_c + 2.0 M3omrsACP_c + 2.0 co2_c'</code></pre>
 </div>
 </div>
 <p>gene_reaction_rule是该反应活跃的基因要求的布尔表示，如 Schellenberger 等人 的研究<a href="http://dx.doi.org/doi:10.1038/nprot.2011.308">Schellenberger et al 2011 Nature Protocols 6(9):1290-307</a>. 我们将分配基因反应规则字符串，该字符串将自动创建相应的基因对象。</p>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="5">
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:00:56.403045100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:00:56.356495800Z&quot;}" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>reaction.gene_reaction_rule <span class="op">=</span> <span class="st">'( STM2378 or STM1197 )'</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>reaction.genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>frozenset({&lt;Gene STM1197 at 0x7fef047474c0&gt;, &lt;Gene STM2378 at 0x7fef04747dc0&gt;})</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>frozenset({&lt;Gene STM1197 at 0x1a2c2619f90&gt;, &lt;Gene STM2378 at 0x1a2c261a150&gt;})</code></pre>
 </div>
 </div>
 <p>此时，模型仍为空</p>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="6">
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:00:59.871686800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:00:59.858516700Z&quot;}" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(model.reactions)<span class="sc">}</span><span class="ss"> reactions initially'</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(model.metabolites)<span class="sc">}</span><span class="ss"> metabolites initially'</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(model.genes)<span class="sc">}</span><span class="ss"> genes initially'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0 reactions initially
-0 metabolites initially
-0 genes initially</code></pre>
+<pre><code>3 reactions initially
+8 metabolites initially
+2 genes initially</code></pre>
 </div>
 </div>
 <p>我们将反应添加到模型中，该模型还将添加所有相关的代谢物和基因</p>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="7">
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:01.531447700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:01.494306900Z&quot;}" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model.add_reactions([reaction])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The objects have been added to the model</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(model.reactions)<span class="sc">}</span><span class="ss"> reactions'</span>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(model.metabolites)<span class="sc">}</span><span class="ss"> metabolites'</span>)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(model.genes)<span class="sc">}</span><span class="ss"> genes'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Ignoring reaction 'R_3OAS140' since it already exists.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1 reactions
-6 metabolites
+<pre><code>3 reactions
+8 metabolites
 2 genes</code></pre>
 </div>
 </div>
 <p>我们可以遍历模型对象来观察内容</p>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate through the the objects in the model</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Reactions"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"---------"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> model.reactions:</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="sc">%s</span><span class="st"> : </span><span class="sc">%s</span><span class="st">"</span> <span class="op">%</span> (x.<span class="bu">id</span>, x.reaction))</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Metabolites"</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-----------"</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> model.metabolites:</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'</span><span class="sc">%9s</span><span class="st"> : </span><span class="sc">%s</span><span class="st">'</span> <span class="op">%</span> (x.<span class="bu">id</span>, x.formula))</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Genes"</span>)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-----"</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> model.genes:</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    associated_ids <span class="op">=</span> (i.<span class="bu">id</span> <span class="cf">for</span> i <span class="kw">in</span> x.reactions)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="sc">%s</span><span class="st"> is associated with reactions: </span><span class="sc">%s</span><span class="st">"</span> <span class="op">%</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>          (x.<span class="bu">id</span>, <span class="st">"{"</span> <span class="op">+</span> <span class="st">", "</span>.join(associated_ids) <span class="op">+</span> <span class="st">"}"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:04.297321900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:04.254275700Z&quot;}" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate through the the objects in the model</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Reactions"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"---------"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> model.reactions:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="sc">%s</span><span class="st"> : </span><span class="sc">%s</span><span class="st">"</span> <span class="op">%</span> (x.<span class="bu">id</span>, x.reaction))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Metabolites"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-----------"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> model.metabolites:</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'</span><span class="sc">%9s</span><span class="st"> : </span><span class="sc">%s</span><span class="st">'</span> <span class="op">%</span> (x.<span class="bu">id</span>, x.formula))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Genes"</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-----"</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> model.genes:</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    associated_ids <span class="op">=</span> (i.<span class="bu">id</span> <span class="cf">for</span> i <span class="kw">in</span> x.reactions)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="sc">%s</span><span class="st"> is associated with reactions: </span><span class="sc">%s</span><span class="st">"</span> <span class="op">%</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>          (x.<span class="bu">id</span>, <span class="st">"{"</span> <span class="op">+</span> <span class="st">", "</span>.join(associated_ids) <span class="op">+</span> <span class="st">"}"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reactions
 ---------
-R_3OAS140 : ddcaACP_c + h_c + malACP_c --&gt; ACP_c + M3omrsACP_c + co2_c
+R_3OAS140 : 2.0 ddcaACP_c + 2.0 h_c + 2.0 malACP_c --&gt; 2.0 ACP_c + 2.0 M3omrsACP_c + 2.0 co2_c
+EX_co2_e : co2_e &lt;=&gt; 
+SK_glycogen_c : glycogen_c &lt;=&gt; 
 
 Metabolites
 -----------
@@ -402,24 +404,26 @@ ddcaACP_c : C23H43N2O8PRS
     co2_c : CO2
     ACP_c : C11H21N2O7PRS
 M3omrsACP_c : C25H45N2O9PRS
+glycogen_c : None
+    co2_e : None
 
 Genes
 -----
-STM2378 is associated with reactions: {R_3OAS140}
-STM1197 is associated with reactions: {R_3OAS140}</code></pre>
+STM1197 is associated with reactions: {R_3OAS140}
+STM2378 is associated with reactions: {R_3OAS140}</code></pre>
 </div>
 </div>
 </section>
 <section id="目标" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="目标"><span class="header-section-number">3.2</span> 目标</h2>
 <p>最后，我们需要设定模型的目标。在这里，我们只希望这是我们添加的单个反应中通量的最大化，我们通过将反应的标识符分配给模型的“目标”属性来做到这一点。</p>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model.objective <span class="op">=</span> <span class="st">'R_3OAS140'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:07.668296100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:07.631294800Z&quot;}" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model.objective <span class="op">=</span> <span class="st">'R_3OAS140'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>创建的目标是一个符号代数表达式，我们可以通过打印来检查它</p>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.objective.expression)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.objective.direction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-editable="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:09.542938100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:09.529931300Z&quot;}" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.objective.expression)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.objective.direction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1.0*R_3OAS140 - 1.0*R_3OAS140_reverse_60acb
 max</code></pre>
@@ -430,22 +434,24 @@ max</code></pre>
 <section id="模型验证" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="模型验证"><span class="header-section-number">3.3</span> 模型验证</h2>
 <p>为了与其他工具进行交换，您可以验证模型并将其导出到 SBML。 有关序列化和可用格式的详细信息，请参阅“读取和写入模型”部分</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tempfile</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> write_sbml_model, validate_sbml_model</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tempfile.NamedTemporaryFile(suffix<span class="op">=</span><span class="st">'.xml'</span>) <span class="im">as</span> f_sbml:</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    write_sbml_model(model, filename<span class="op">=</span>f_sbml.name)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    report <span class="op">=</span> validate_sbml_model(filename<span class="op">=</span>f_sbml.name)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>pprint(report)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:13.254082800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:13.215006500Z&quot;}" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tempfile</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> write_sbml_model, validate_sbml_model</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tempfile.NamedTemporaryFile(suffix<span class="op">=</span><span class="st">'.xml'</span>) <span class="im">as</span> f_sbml:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    write_sbml_model(model, filename<span class="op">=</span>f_sbml.name)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    report <span class="op">=</span> validate_sbml_model(filename<span class="op">=</span>f_sbml.name)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>pprint(report)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(&lt;Model example_model at 0x7fef046eb160&gt;,
+<pre><code>(None,
  {'COBRA_CHECK': [],
-  'COBRA_ERROR': [],
+  'COBRA_ERROR': ['No SBML model detected in file.'],
   'COBRA_FATAL': [],
   'COBRA_WARNING': [],
-  'SBML_ERROR': [],
+  'SBML_ERROR': ['E0 (Error): Operating system (core, L1); File unreadable; '
+                 'File unreadable. '
+                 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpc4e0sees.xml\n'],
   'SBML_FATAL': [],
   'SBML_SCHEMA_ERROR': [],
   'SBML_WARNING': []})</code></pre>
@@ -456,23 +462,18 @@ max</code></pre>
 <section id="交换exchange汇sinks和需求demands" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="交换exchange汇sinks和需求demands"><span class="header-section-number">3.4</span> 交换（exchange）、汇（sinks）和需求（demands）</h2>
 <p>可以使用模型的“add_boundary”方法添加边界反应 有三种不同类型的预定义边界反应：交换反应、需求反应和汇反应。它们都是不平衡的伪反应，这意味着它们通过在模型系统中添加或去除代谢物来实现建模功能，但不是基于真实的生物学。交换反应是一种可逆反应，在细胞外区室中增加或去除细胞外代谢物。需求反应是消耗细胞内代谢物的不可逆反应。汇类似于交换，但专门用于细胞内代谢物，即添加或去除细胞内代谢物的可逆反应。</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"exchanges"</span>, model.exchanges)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"demands"</span>, model.demands)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sinks"</span>, model.sinks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There are no boundary reactions in this model. Therefore specific types of boundary reactions such as 'exchanges', 'demands' or 'sinks' cannot be identified.
-There are no boundary reactions in this model. Therefore specific types of boundary reactions such as 'exchanges', 'demands' or 'sinks' cannot be identified.
-There are no boundary reactions in this model. Therefore specific types of boundary reactions such as 'exchanges', 'demands' or 'sinks' cannot be identified.</code></pre>
-</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:16.109593200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:16.075582Z&quot;}" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"exchanges"</span>, model.exchanges)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"demands"</span>, model.demands)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sinks"</span>, model.sinks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>exchanges []
+<pre><code>exchanges [&lt;Reaction EX_co2_e at 0x1a2c266f190&gt;]
 demands []
-sinks []</code></pre>
+sinks [&lt;Reaction SK_glycogen_c at 0x1a2c264de50&gt;]</code></pre>
 </div>
 </div>
 <p>边界反应在代谢物上定义。首先，我们在模型中添加两种代谢物，然后 我们定义边界反应。我们将糖原添加到胞质区室“c”中，将 CO2 添加到外部区室“e”。</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:18.125055200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:18.114015700Z&quot;}" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>model.add_metabolites([</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    Metabolite(</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'glycogen_c'</span>,</span>
@@ -486,127 +487,47 @@ sinks []</code></pre>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:19.346825100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:19.306203900Z&quot;}" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create exchange reaction</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>model.add_boundary(model.metabolites.get_by_id(<span class="st">"co2_e"</span>), <span class="bu">type</span><span class="op">=</span><span class="st">"exchange"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><strong>Reaction identifier</strong></td>
-<td>EX_co2_e</td>
-</tr>
-<tr class="even">
-<td><strong>Name</strong></td>
-<td>CO2 exchange</td>
-</tr>
-<tr class="odd">
-<td><strong>Memory address</strong></td>
-<td>0x22eceba3130</td>
-</tr>
-<tr class="even">
-<td><strong>Stoichiometry</strong></td>
-<td><p>co2_e &lt;=&gt;</p>
-<p>CO2 &lt;=&gt;</p></td>
-</tr>
-<tr class="odd">
-<td><strong>GPR</strong></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Lower bound</strong></td>
-<td>-1000.0</td>
-</tr>
-<tr class="odd">
-<td><strong>Upper bound</strong></td>
-<td>1000.0</td>
-</tr>
-</tbody>
-</table>
-
-        
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: Boundary reaction 'EX_co2_e' already exists.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create exchange reaction</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>model.add_boundary(model.metabolites.get_by_id(<span class="st">"glycogen_c"</span>), <span class="bu">type</span><span class="op">=</span><span class="st">"sink"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><strong>Reaction identifier</strong></td>
-<td>SK_glycogen_c</td>
-</tr>
-<tr class="even">
-<td><strong>Name</strong></td>
-<td>glycogen sink</td>
-</tr>
-<tr class="odd">
-<td><strong>Memory address</strong></td>
-<td>0x22ed68b3a90</td>
-</tr>
-<tr class="even">
-<td><strong>Stoichiometry</strong></td>
-<td><p>glycogen_c &lt;=&gt;</p>
-<p>glycogen &lt;=&gt;</p></td>
-</tr>
-<tr class="odd">
-<td><strong>GPR</strong></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>Lower bound</strong></td>
-<td>-1000.0</td>
-</tr>
-<tr class="odd">
-<td><strong>Upper bound</strong></td>
-<td>1000.0</td>
-</tr>
-</tbody>
-</table>
-
-        
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:20.363796900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:20.296162600Z&quot;}" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create exchange reaction</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>model.add_boundary(model.metabolites.get_by_id(<span class="st">"glycogen_c"</span>), <span class="bu">type</span><span class="op">=</span><span class="st">"sink"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: Boundary reaction 'SK_glycogen_c' already exists.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we have an additional exchange and sink reaction in the model</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"exchanges"</span>, model.exchanges)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sinks"</span>, model.sinks)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"demands"</span>, model.demands)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:21.421233100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:21.383215200Z&quot;}" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we have an additional exchange and sink reaction in the model</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"exchanges"</span>, model.exchanges)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sinks"</span>, model.sinks)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"demands"</span>, model.demands)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>exchanges [&lt;Reaction EX_co2_e at 0x22eceba3130&gt;]
-sinks [&lt;Reaction SK_glycogen_c at 0x22ed68b3a90&gt;]
+<pre><code>exchanges [&lt;Reaction EX_co2_e at 0x1a2c266f190&gt;]
+sinks [&lt;Reaction SK_glycogen_c at 0x1a2c264de50&gt;]
 demands []</code></pre>
 </div>
 </div>
 <p>若要创建需求反应而不是接收器，请使用类型“demand”而不是“sink”。</p>
 <p>有关所有边界反应的信息都可以通过模型的属性“边界”获得。</p>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boundary reactions</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>model.boundary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>[&lt;Reaction EX_co2_e at 0x7fef04703d90&gt;,
- &lt;Reaction SK_glycogen_c at 0x7fef046eb2e0&gt;]</code></pre>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:23.872682800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:23.837674400Z&quot;}" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boundary reactions</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>model.boundary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>[&lt;Reaction EX_co2_e at 0x1a2c266f190&gt;,
+ &lt;Reaction SK_glycogen_c at 0x1a2c264de50&gt;]</code></pre>
 </div>
 </div>
 <p>获得所有代谢反应的一个巧妙技巧是</p>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># metabolic reactions</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span>(model.reactions) <span class="op">-</span> <span class="bu">set</span>(model.boundary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
-<pre><code>{&lt;Reaction R_3OAS140 at 0x7fef04737d00&gt;}</code></pre>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:01:25.652578500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:01:25.618585300Z&quot;}" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># metabolic reactions</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span>(model.reactions) <span class="op">-</span> <span class="bu">set</span>(model.boundary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre><code>{&lt;Reaction R_3OAS140 at 0x1a2c2602b90&gt;}</code></pre>
 </div>
 </div>
 

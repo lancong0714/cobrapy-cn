@@ -274,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:07:53.019105400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:07:47.653272900Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> time</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -289,18 +289,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="敲除单个基因和反应" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="敲除单个基因和反应"><span class="header-section-number">6.1</span> 敲除单个基因和反应</h2>
 <p>在分析代谢模型时，一个经常被问到的问题是，如果某种反应不允许有任何通量，会发生什么。这可以通过以下方式使用 cobrapy 进行测试</p>
-<div class="cell" data-tags="[]" data-execution_count="2">
+<div class="cell" data-tags="[]" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:07:56.007891Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:07:56.001833500Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'complete model: '</span>, cobra_model.optimize())</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> cobra_model:</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    cobra_model.reactions.PFK.knock_out()</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'pfk knocked out: '</span>, cobra_model.optimize())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>complete model:  &lt;Solution 0.874 at 0x17858e4b340&gt;
-pfk knocked out:  &lt;Solution 0.704 at 0x17858e4b310&gt;</code></pre>
+<pre><code>complete model:  &lt;Solution 0.874 at 0x2551f601bd0&gt;
+pfk knocked out:  &lt;Solution 0.704 at 0x2551f603b50&gt;</code></pre>
 </div>
 </div>
 <p>在评估遗传的操作策略时，更有趣的是检查如果给定的基因被敲除会发生什么，因为这样做在冗余的情况下不会影响任何反应，或者如果基因参与多个反应，则会影响更多的反应。</p>
-<div class="cell" data-tags="[]" data-execution_count="3">
+<div class="cell" data-tags="[]" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:07:58.468745300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:07:58.375679500Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'complete model: '</span>, cobra_model.optimize())</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> cobra_model:</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    cobra_model.genes.b1723.knock_out()</span>
@@ -308,20 +308,20 @@ pfk knocked out:  &lt;Solution 0.704 at 0x17858e4b310&gt;</code></pre>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    cobra_model.genes.b3916.knock_out()</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'pfkB knocked out: '</span>, cobra_model.optimize())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>complete model:  &lt;Solution 0.874 at 0x1785b602880&gt;
-pfkA knocked out:  &lt;Solution 0.874 at 0x1785b922f10&gt;
-pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
+<pre><code>complete model:  &lt;Solution 0.874 at 0x2551f60ec90&gt;
+pfkA knocked out:  &lt;Solution 0.874 at 0x2551f60e590&gt;
+pfkB knocked out:  &lt;Solution 0.704 at 0x2551f60e0d0&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="单次删除" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="单次删除"><span class="header-section-number">6.2</span> 单次删除</h2>
 <p>在模型上执行所有单基因删除</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:08.941962300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:02.003662400Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>deletion_results <span class="op">=</span> single_gene_deletion(cobra_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>这些也可以只对一部分基因进行</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:13.403896400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:08.943963900Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>single_gene_deletion(cobra_model, cobra_model.genes[:<span class="dv">20</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -339,7 +339,7 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>{b1849}</td>
+<td>{b1241}</td>
 <td>0.873922</td>
 <td>optimal</td>
 </tr>
@@ -351,109 +351,109 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>{b1276}</td>
-<td>0.873922</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>{b0351}</td>
-<td>0.873922</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>{b3733}</td>
-<td>0.374230</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>{b1241}</td>
-<td>0.873922</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>{b0116}</td>
-<td>0.782351</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
 <td>{b0727}</td>
 <td>0.858307</td>
 <td>optimal</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>{b0356}</td>
-<td>0.873922</td>
-<td>optimal</td>
-</tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<td data-quarto-table-cell-role="th">3</td>
 <td>{b2587}</td>
 <td>0.873922</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>{b0118}</td>
+<td data-quarto-table-cell-role="th">4</td>
+<td>{b1849}</td>
 <td>0.873922</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>{b0726}</td>
-<td>0.858307</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>{b3736}</td>
-<td>0.374230</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>{b3735}</td>
-<td>0.374230</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
-<td>{b2296}</td>
-<td>0.873922</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
-<td>{b3115}</td>
-<td>0.873922</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
-<td>{b3732}</td>
-<td>0.374230</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
+<td data-quarto-table-cell-role="th">5</td>
 <td>{b0474}</td>
 <td>0.873922</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">18</td>
+<td data-quarto-table-cell-role="th">6</td>
+<td>{b2296}</td>
+<td>0.873922</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>{b0116}</td>
+<td>0.782351</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>{b0351}</td>
+<td>0.873922</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>{b3734}</td>
+<td>0.374230</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>{b3732}</td>
+<td>0.374230</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
 <td>{s0001}</td>
 <td>0.211141</td>
 <td>optimal</td>
 </tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>{b3733}</td>
+<td>0.374230</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>{b1276}</td>
+<td>0.873922</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>{b0118}</td>
+<td>0.873922</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>{b0356}</td>
+<td>0.873922</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>{b3115}</td>
+<td>0.873922</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>{b0726}</td>
+<td>0.858307</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>{b3735}</td>
+<td>0.374230</td>
+<td>optimal</td>
+</tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">19</td>
-<td>{b3734}</td>
+<td>{b3736}</td>
 <td>0.374230</td>
 <td>optimal</td>
 </tr>
@@ -464,7 +464,7 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 </div>
 </div>
 <p>这也可用于反应</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:17.906383100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:13.376898700Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>single_reaction_deletion(cobra_model, cobra_model.reactions[:<span class="dv">20</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
@@ -482,104 +482,104 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>{AKGt2r}</td>
-<td>8.739215e-01</td>
+<td>{ACONTb}</td>
+<td>-1.376403e-15</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>{D_LACt2}</td>
-<td>8.739215e-01</td>
+<td>{ENO}</td>
+<td>8.053080e-16</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>{Biomass_Ecoli_core}</td>
-<td>0.000000e+00</td>
+<td>{ACALD}</td>
+<td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>{ETOHt2r}</td>
-<td>8.739215e-01</td>
+<td>{CYTBD}</td>
+<td>2.116629e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>{ADK1}</td>
+<td>{ALCD2x}</td>
 <td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>{ACONTb}</td>
-<td>3.279963e-17</td>
+<td>{CS}</td>
+<td>-7.494929e-15</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>{ACt2r}</td>
+<td>{D_LACt2}</td>
 <td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>{ACONTa}</td>
-<td>3.344590e-15</td>
+<td>{ACKr}</td>
+<td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
-<td>{ACKr}</td>
+<td>{ETOHt2r}</td>
 <td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>{ALCD2x}</td>
-<td>8.739215e-01</td>
+<td>{Biomass_Ecoli_core}</td>
+<td>0.000000e+00</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">10</td>
-<td>{ATPS4r}</td>
-<td>3.742299e-01</td>
+<td>{AKGt2r}</td>
+<td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
-<td>{ACALD}</td>
-<td>8.739215e-01</td>
+<td>{AKGDH}</td>
+<td>8.583074e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">12</td>
-<td>{ENO}</td>
-<td>1.357454e-16</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>{EX_ac_e}</td>
-<td>8.739215e-01</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
 <td>{ACALDt}</td>
 <td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>{ACONTa}</td>
+<td>-1.405299e-15</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>{ACt2r}</td>
+<td>8.739215e-01</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
 <td data-quarto-table-cell-role="th">15</td>
-<td>{CS}</td>
-<td>4.757918e-15</td>
+<td>{ATPS4r}</td>
+<td>3.742299e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">16</td>
-<td>{AKGDH}</td>
-<td>8.583074e-01</td>
+<td>{EX_ac_e}</td>
+<td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
@@ -590,8 +590,8 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">18</td>
-<td>{CYTBD}</td>
-<td>2.116629e-01</td>
+<td>{ADK1}</td>
+<td>8.739215e-01</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
@@ -610,10 +610,10 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 <section id="双重删除" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="双重删除"><span class="header-section-number">6.3</span> 双重删除</h2>
 <p>双重删除以类似的方式运行。</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:21.752050900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:17.907386200Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>double_gene_deletion(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    cobra_model, cobra_model.genes[<span class="op">-</span><span class="dv">5</span>:]).<span class="bu">round</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -629,25 +629,25 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>{b2464}</td>
-<td>0.8739</td>
+<td>{b2935, b2465}</td>
+<td>0.0000</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>{b2464, b2935}</td>
+<td>{b0008, b2935}</td>
 <td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>{b2464, b3919}</td>
-<td>0.7040</td>
+<td>{b2464}</td>
+<td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>{b0008, b3919}</td>
+<td>{b3919, b2465}</td>
 <td>0.7040</td>
 <td>optimal</td>
 </tr>
@@ -659,14 +659,14 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>{b0008, b2935}</td>
-<td>0.8739</td>
+<td>{b0008, b2464}</td>
+<td>0.8648</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>{b2465, b3919}</td>
-<td>0.7040</td>
+<td>{b2935, b2464}</td>
+<td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
@@ -677,14 +677,14 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
-<td>{b2465}</td>
-<td>0.8739</td>
+<td>{b2935, b3919}</td>
+<td>0.7040</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>{b0008, b2465}</td>
-<td>0.8739</td>
+<td>{b3919, b2464}</td>
+<td>0.7040</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
@@ -701,19 +701,19 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">12</td>
-<td>{b2465, b2935}</td>
-<td>0.0000</td>
+<td>{b0008, b2465}</td>
+<td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">13</td>
-<td>{b2464, b0008}</td>
-<td>0.8648</td>
+<td>{b2465}</td>
+<td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">14</td>
-<td>{b2935, b3919}</td>
+<td>{b0008, b3919}</td>
 <td>0.7040</td>
 <td>optimal</td>
 </tr>
@@ -724,7 +724,7 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 </div>
 </div>
 <p>默认情况下，双重删除功能将自动使用多重处理，如果可用，则将任务拆分为最多 4 个内核。也可以手动指定内核数。设置使用单个内核将禁用多处理库，这通常有助于调试。</p>
-<div class="cell" data-tags="[]" data-execution_count="5">
+<div class="cell" data-tags="[]" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:29.678103400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:21.741048300Z&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> time()  <span class="co"># start timer()</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>double_gene_deletion(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    ecoli_model, ecoli_model.genes[:<span class="dv">25</span>], processes<span class="op">=</span><span class="dv">2</span>)</span>
@@ -741,16 +741,16 @@ pfkB knocked out:  &lt;Solution 0.704 at 0x1785b922430&gt;</code></pre>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Speedup of </span><span class="sc">%.2f</span><span class="st">x"</span> <span class="op">%</span> (t2 <span class="op">/</span> t1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Double gene deletions for 200 genes completed in 4.08 sec with 2 cores
-Double gene deletions for 200 genes completed in 2.95 sec with 1 core
-Speedup of 0.72x</code></pre>
+<pre><code>Double gene deletions for 200 genes completed in 5.06 sec with 2 cores
+Double gene deletions for 200 genes completed in 2.85 sec with 1 core
+Speedup of 0.56x</code></pre>
 </div>
 </div>
 <p>也可以对反应运行双重删除。</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:33.547457300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:29.658102300Z&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>double_reaction_deletion(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    cobra_model, cobra_model.reactions[<span class="dv">2</span>:<span class="dv">7</span>]).<span class="bu">round</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -766,92 +766,92 @@ Speedup of 0.72x</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>{ACKr}</td>
-<td>0.8739</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>{ADK1, ACKr}</td>
-<td>0.8739</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>{ACONTa}</td>
-<td>-0.0000</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>{ACKr, ACONTb}</td>
-<td>-0.0000</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>{ADK1, ACONTa}</td>
-<td>0.0000</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>{ACONTa, ACONTb}</td>
-<td>-0.0000</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>{ADK1, ACONTb}</td>
-<td>-0.0000</td>
-<td>optimal</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>{ACONTa, ACt2r}</td>
-<td>-0.0000</td>
-<td>optimal</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
 <td>{ACKr, ACt2r}</td>
 <td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>{ACONTa, ACKr}</td>
-<td>0.0000</td>
+<td data-quarto-table-cell-role="th">1</td>
+<td>{ACONTb, ACt2r}</td>
+<td>-0.0000</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
+<td data-quarto-table-cell-role="th">2</td>
 <td>{ADK1, ACt2r}</td>
 <td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>{ACKr}</td>
+<td>0.8739</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>{ACONTa, ACKr}</td>
+<td>0.0000</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>{ACONTb, ACONTa}</td>
+<td>-0.0000</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>{ADK1, ACONTa}</td>
+<td>-0.0000</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>{ACONTb}</td>
+<td>-0.0000</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>{ACONTb, ACKr}</td>
+<td>-0.0000</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>{ADK1, ACKr}</td>
+<td>0.8739</td>
+<td>optimal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>{ACONTb, ADK1}</td>
+<td>-0.0000</td>
+<td>optimal</td>
+</tr>
+<tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
-<td>{ACt2r}</td>
+<td>{ADK1}</td>
 <td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">12</td>
-<td>{ACONTb, ACt2r}</td>
+<td>{ACONTa}</td>
 <td>-0.0000</td>
 <td>optimal</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">13</td>
-<td>{ACONTb}</td>
-<td>0.0000</td>
+<td>{ACt2r}</td>
+<td>0.8739</td>
 <td>optimal</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">14</td>
-<td>{ADK1}</td>
-<td>0.8739</td>
+<td>{ACONTa, ACt2r}</td>
+<td>-0.0000</td>
 <td>optimal</td>
 </tr>
 </tbody>
@@ -865,7 +865,7 @@ Speedup of 0.72x</code></pre>
 <h2 data-number="6.4" class="anchored" data-anchor-id="访问单个删除结果"><span class="header-section-number">6.4</span> 访问单个删除结果</h2>
 <p>请注意，删除的索引是 python set 对象。这是适当的类型，因为删除的顺序无关紧要。删除反应 1 和反应 2 与删除反应 2 和反应 1 的效果相同。</p>
 <p>为了更轻松地访问结果，COBRAPpy 删除函数返回的所有 DataFrame 都有一个 knockout 索引器，使访问变得更加简单。索引器中的每个条目都被视为单个删除条目。因此，您需要传递双重删除的集合。</p>
-<div class="cell" data-tags="[]" data-execution_count="7">
+<div class="cell" data-tags="[]" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:47.674567Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:33.540458900Z&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>single <span class="op">=</span> single_reaction_deletion(cobra_model)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>double <span class="op">=</span> double_reaction_deletion(cobra_model)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -873,13 +873,13 @@ Speedup of 0.72x</code></pre>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(double.knockout[{<span class="st">"ATPM"</span>, <span class="st">"TKT1"</span>}])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       ids    growth   status
-53  {ATPM}  0.916647  optimal
-              ids   growth   status
-579  {ATPM, TKT1}  0.90584  optimal</code></pre>
+92  {ATPM}  0.916647  optimal
+             ids   growth   status
+19  {ATPM, TKT1}  0.90584  optimal</code></pre>
 </div>
 </div>
 <p>这可用于一次获得多个删除，也适用于反应或基因对象（取决于您删除的内容）。</p>
-<div class="cell" data-tags="[]" data-execution_count="9">
+<div class="cell" data-tags="[]" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:47.689071500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:47.676567Z&quot;}" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>atpm <span class="op">=</span> cobra_model.reactions.ATPM</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>tkt1 <span class="op">=</span> cobra_model.reactions.TKT1</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>pfk <span class="op">=</span> cobra_model.reactions.PFK</span>
@@ -888,13 +888,13 @@ Speedup of 0.72x</code></pre>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(double.knockout[{atpm, tkt1}, {atpm, pfk}, {atpm}])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       ids    growth   status
-11   {PFK}  0.704037  optimal
-53  {ATPM}  0.916647  optimal
-64  {TKT1}  0.864759  optimal
+60  {TKT1}  0.864759  optimal
+81   {PFK}  0.704037  optimal
+92  {ATPM}  0.916647  optimal
                ids    growth   status
-163         {ATPM}  0.916647  optimal
-579   {ATPM, TKT1}  0.905840  optimal
-3387   {PFK, ATPM}  0.704037  optimal</code></pre>
+19    {ATPM, TKT1}  0.905840  optimal
+1136   {PFK, ATPM}  0.704037  optimal
+3996        {ATPM}  0.916647  optimal</code></pre>
 </div>
 </div>
 

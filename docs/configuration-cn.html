@@ -280,10 +280,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="配置对象" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="配置对象"><span class="header-section-number">2.1</span> 配置对象</h2>
 <p>您可以通过以下方式获取配置对象 1：</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:43.926193100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:42.042260Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cobra</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:45.140964800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:45.137966800Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cobra_config <span class="op">=</span> cobra.Configuration()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>1配置对象是单例。这意味着只能存在一个实例，并且在 COBRApy 中到处都被接受。</p>
@@ -291,19 +291,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="反应边界" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="反应边界"><span class="header-section-number">2.2</span> 反应边界</h2>
 <p>该对象具有以下属性，你可以检查这些属性，也可以根据需要进行更改。</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:49.015710700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:49.006175600Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cobra_config.lower_bound</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>-1000.0</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:49.990773800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:49.977251Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cobra_config.upper_bound</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>1000.0</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:50.746743900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:50.732920300Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cobra_config.bounds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>(-1000.0, 1000.0)</code></pre>
@@ -312,10 +312,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="更改边界" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="更改边界"><span class="header-section-number">2.2.1</span> 更改边界</h3>
 <p>你可在反应前修改并使用这些值。</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:53.536691100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:53.526675500Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cobra_config.bounds <span class="op">=</span> <span class="op">-</span><span class="dv">10</span>, <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:54.363825400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:54.350773600Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cobra.Reaction(<span class="st">"R1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 
@@ -336,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td><strong>Memory address</strong></td>
-<td>0x7f8642e5bba8</td>
+<td>0x16c3621d350</td>
 </tr>
 <tr class="even">
 <td><strong>Stoichiometry</strong></td>
@@ -362,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>请注意，默认情况下，反应是不可逆的。你可以通过取消设置下限参数来更改此行为。</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:56.404821300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:56.390943900Z&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cobra.Reaction(<span class="st">"R2"</span>, lower_bound<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 
@@ -383,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td><strong>Memory address</strong></td>
-<td>0x7f8642e5bda0</td>
+<td>0x16c3f6739d0</td>
 </tr>
 <tr class="even">
 <td><strong>Stoichiometry</strong></td>
@@ -409,15 +409,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>注意：大多数模型都明确定义了反应边界，该边界优先于配置的值。</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:58.108876600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:58.101867900Z&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:58.981980200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:58.781880700Z&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:02:59.470511500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:02:59.454977Z&quot;}" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model.reactions.ACt2r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="11">
 
         
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
@@ -436,7 +436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td><strong>Memory address</strong></td>
-<td>0x239dae80070</td>
+<td>0x16c3f61f510</td>
 </tr>
 <tr class="even">
 <td><strong>Stoichiometry</strong></td>
@@ -466,23 +466,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="solver" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="solver"><span class="header-section-number">2.3</span> Solver</h2>
 <p>你可以通过新实例化模型来定义默认求解器。默认求解器取决于您的环境。为了测试 Gurobi、CPLEX 和 GLPK 的可用性。假定 GLPK 始终存在于环境中。</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:33:51.405877300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:33:51.395842600Z&quot;}" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model.solver</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>&lt;optlang.glpk_interface.Model at 0x7f8642e740f0&gt;</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>&lt;optlang.glpk_interface.Model at 0x16c3f6a8b50&gt;</code></pre>
 </div>
 </div>
 <p>更改Solver</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:33:35.475788100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:33:35.464850500Z&quot;}" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cobra_config.solver <span class="op">=</span> <span class="st">"glpk_exact"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:33:36.767278600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:33:36.587936100Z&quot;}" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>new_model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:33:48.100725500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:33:48.089732400Z&quot;}" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>new_model.solver</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<pre><code>&lt;optlang.glpk_exact_interface.Model at 0x7f8643112a90&gt;</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>&lt;optlang.glpk_exact_interface.Model at 0x16c3f7599d0&gt;</code></pre>
 </div>
 </div>
 <p>更改全局配置值在工作会话开始时最有用。</p>

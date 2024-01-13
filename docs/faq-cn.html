@@ -289,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="16.2" class="anchored" data-anchor-id="如何重新命名反应或代谢物"><span class="header-section-number">16.2</span> 如何重新命名反应或代谢物?</h2>
 <p>TL;DR 之后使用“Model.repair”</p>
 <p>当重命名代谢物或反应时，会出现一些问题，因为cobra索引是基于ID的，这可能会导致错误。例如:</p>
-<div class="cell" data-tags="[]" data-execution_count="1">
+<div class="cell" data-tags="[]" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:10:05.914578200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:09:57.755371800Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"iYS1720"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -300,14 +300,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    model.metabolites.get_by_id(model.metabolites[<span class="dv">0</span>].<span class="bu">id</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">KeyError</span> <span class="im">as</span> e:</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">repr</span>(e))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>ModuleNotFoundError: No module named 'cobra'</code></pre>
-</div>
 </div>
 <p>Model.repair 函数将重新生成必要的索引</p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model.repair()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model.metabolites.get_by_id(model.metabolites[<span class="dv">0</span>].<span class="bu">id</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:10:05.999637Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:10:05.960579300Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model.repair()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model.metabolites.get_by_id(model.metabolites[<span class="dv">0</span>].<span class="bu">id</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 
         
@@ -323,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td><strong>Memory address</strong></td>
-<td>0x7f9c91ec0a90</td>
+<td>0x16e9f8c5750</td>
 </tr>
 <tr class="even">
 <td><strong>Formula</strong></td>
@@ -335,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td><strong>In 9 reaction(s)</strong></td>
-<td>FTHFD, ULA4NFT, GARFT, AICART, TDPFRMT, MTHFC, BIOMASS_Ec_iAF1260_core_59p81M, BIOMASS_invivo, FMETTRS</td>
+<td>GARFT, MTHFC, BIOMASS_Ec_iAF1260_core_59p81M, BIOMASS_invivo, TDPFRMT, FTHFD, ULA4NFT, AICART, FMETTRS</td>
 </tr>
 </tbody>
 </table>
@@ -346,16 +343,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="16.3" class="anchored" data-anchor-id="如何删除基因"><span class="header-section-number">16.3</span> 如何删除基因？</h2>
 <p>这取决于你所说的删除基因到底是什么意思。</p>
 <p>如果要模拟基因敲除的模型，请在上下文中使用<code>cobra.manipulation.knock_out_model_genes</code> 函数。退出上下文时，此函数的效果将相反。</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"iYS1720"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>PGI <span class="op">=</span> model.reactions.get_by_id(<span class="st">"PGI"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"bounds before knockout:"</span>, (PGI.lower_bound, PGI.upper_bound))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.manipulation <span class="im">import</span> knock_out_model_genes</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>knock_out_model_genes(model, [<span class="st">"STM4221"</span>])</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"bounds after knockouts"</span>, (PGI.lower_bound, PGI.upper_bound))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:10:10.503021400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:10:06.000637300Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"iYS1720"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>PGI <span class="op">=</span> model.reactions.get_by_id(<span class="st">"PGI"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"bounds before knockout:"</span>, (PGI.lower_bound, PGI.upper_bound))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.manipulation <span class="im">import</span> knock_out_model_genes</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>knock_out_model_genes(model, [<span class="st">"STM4221"</span>])</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"bounds after knockouts"</span>, (PGI.lower_bound, PGI.upper_bound))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>bounds before knockout: (-1000.0, 1000.0)
-bounds after knockouts (0.0, 0.0)</code></pre>
+bounds after knockouts (0, 0)</code></pre>
 </div>
 </div>
 <p>如果你想从模型中去除一个基因的所有痕迹，这要困难得多，因为这需要改变涉及该基因的反应的所有 <code>gene_reaction_rule</code> 字符串。</p>
@@ -363,28 +360,28 @@ bounds after knockouts (0.0, 0.0)</code></pre>
 <section id="如何更改反应的可逆性" class="level2" data-number="16.4">
 <h2 data-number="16.4" class="anchored" data-anchor-id="如何更改反应的可逆性"><span class="header-section-number">16.4</span> 如何更改反应的可逆性？</h2>
 <p><code>Reaction.reversibility</code> 是cobra中的一个属性，在从下界和上界请求时计算。</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"iYS1720"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model.reactions.get_by_id(<span class="st">"PGI"</span>).reversibility</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:10:14.977017200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:10:10.505018500Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"iYS1720"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model.reactions.get_by_id(<span class="st">"PGI"</span>).reversibility</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>True</code></pre>
 </div>
 </div>
 <p>尝试直接设置它将导致错误或警告：</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    model.reactions.get_by_id(<span class="st">"PGI"</span>).reversibility <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">repr</span>(e))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:10:14.978010200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:10:14.969347900Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    model.reactions.get_by_id(<span class="st">"PGI"</span>).reversibility <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">repr</span>(e))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/Users/uridavidakavia/PycharmProjects/cobrapy/src/cobra/core/reaction.py:810: UserWarning: Setting reaction reversibility is ignored
+<pre><code>d:\ProgramData\anaconda3\Lib\site-packages\cobra\core\reaction.py:810: UserWarning: Setting reaction reversibility is ignored
   warn("Setting reaction reversibility is ignored")</code></pre>
 </div>
 </div>
 <p>改变可逆性的方法是改变边界，使反应不可逆。</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model.reactions.get_by_id(<span class="st">"PGI"</span>).lower_bound <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>model.reactions.get_by_id(<span class="st">"PGI"</span>).reversibility</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:10:15.026405900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:10:14.979010500Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model.reactions.get_by_id(<span class="st">"PGI"</span>).lower_bound <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model.reactions.get_by_id(<span class="st">"PGI"</span>).reversibility</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>False</code></pre>
 </div>
@@ -395,9 +392,9 @@ bounds after knockouts (0.0, 0.0)</code></pre>
 <section id="关于基于-optlang-的求解器" class="level3" data-number="16.5.1">
 <h3 data-number="16.5.1" class="anchored" data-anchor-id="关于基于-optlang-的求解器"><span class="header-section-number">16.5.1</span> 关于基于 optlang 的求解器</h3>
 <p>使用 optlang 求解器，模型的 LP 公式通过其字符串表示获得。所有求解器的行为方式都相同。</p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'test.lp'</span>, <span class="st">'w'</span>) <span class="im">as</span> out:</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    out.write(<span class="bu">str</span>(model.solver))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:10:15.056662900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:10:14.994405500Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'test.lp'</span>, <span class="st">'w'</span>) <span class="im">as</span> out:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    out.write(<span class="bu">str</span>(model.solver))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="我如何将通量解形象化" class="level3" data-number="16.5.2">

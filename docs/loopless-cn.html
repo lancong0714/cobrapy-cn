@@ -273,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>该程序的目标是识别无循环的热力学一致的通量状态，顾名思义。您可以在笔记本末尾的部分找到更详细的说明。 <a href="#Method">method</a></p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:47.586781500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:45.333162700Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plot_helper</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -281,34 +281,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra <span class="im">import</span> Reaction, Metabolite, Model</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.flux_analysis.loopless <span class="im">import</span> add_loopless, loopless_solution</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.flux_analysis <span class="im">import</span> pfba</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>ModuleNotFoundError: No module named 'matplotlib'</code></pre>
-</div>
 </div>
 <section id="无循环解决方案" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="无循环解决方案"><span class="header-section-number">9.1</span> 无循环解决方案</h2>
 <p>由于增加了混合整数约束，下面描述的经典无循环方法在计算上成本很高。一种更快、更实用的方法是对通量分布进行后处理，只需将通量设置为零，只要它们可以为零，而不改变模型中任何交换反应的通量。 <a href="http://dx.doi.org/10.1093/bioinformatics/btv096">CycleFreeFlux</a> 是一种可用于实现此目的的算法，在 cobrapy 中，它是在 <code>cobra.flux_analysis.loopless_solution</code> 函数中实现的。<code>loopless_solution</code>将识别与原始磁通量分布最接近的磁通量分布（仅使用无循环基本磁通模式）。请注意，这不会删除您明确请求的环路，例如通过强制环路反应携带非零通量。</p>
 <p>使用比上面的简单示例更大的模型，可以按如下方式演示</p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>salmonella <span class="op">=</span> load_model(<span class="st">'salmonella'</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>nominal <span class="op">=</span> salmonella.optimize()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>loopless <span class="op">=</span> loopless_solution(salmonella)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'load_model' is not defined</code></pre>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:56.381652800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:50.576555100Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>salmonella <span class="op">=</span> load_model(<span class="st">'salmonella'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>nominal <span class="op">=</span> salmonella.optimize()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>loopless <span class="op">=</span> loopless_solution(salmonella)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:56.401713100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:56.384661700Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pandas.DataFrame(<span class="bu">dict</span>(loopless<span class="op">=</span>loopless.fluxes, nominal<span class="op">=</span>nominal.fluxes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pandas.DataFrame(<span class="bu">dict</span>(loopless<span class="op">=</span>loopless.fluxes, nominal<span class="op">=</span>nominal.fluxes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'loopless' is not defined</code></pre>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:57.098742900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:56.395717400Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.plot.scatter(x<span class="op">=</span><span class="st">'loopless'</span>, y<span class="op">=</span><span class="st">'nominal'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>&lt;Axes: xlabel='loopless', ylabel='nominal'&gt;</code></pre>
 </div>
-</div>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.plot.scatter(x<span class="op">=</span><span class="st">'loopless'</span>, y<span class="op">=</span><span class="st">'nominal'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'df' is not defined</code></pre>
+<div class="cell-output cell-output-display">
+<p><img src="loopless-cn_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p>此功能还可以在 FVA 中使用，通过使用 ‘loopless=True’ 参数来避免反应获得高通量范围，这些反应基本上只有在允许它们参与循环时才能达到高通量（参见模拟笔记本），从而导致更窄的通量范围。</p>
@@ -321,70 +315,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>您希望强制模型在存在独立于设定的反应边界的循环时不可行。</li>
 </ol>
 <p>我用一个玩具模型来演示这一点，该模型有一个，A <span class="math inline">\(\rightarrow\)</span> B <span class="math inline">\(\rightarrow\)</span> C <span class="math inline">\(\rightarrow\)</span> A，w$ A，允许 A 进入系统，允许 C 离开。系统的图形视图如下图所示：</p>
-<div class="cell" data-scrolled="true" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_helper.plot_loop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'plot_helper' is not defined</code></pre>
+<div class="cell" data-scrolled="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:57.404590700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:57.084684900Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_helper.plot_loop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="loopless-cn_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model()</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model.add_metabolites([Metabolite(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="st">"ABC"</span>])</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>model.add_reactions([Reaction(i) <span class="cf">for</span> i <span class="kw">in</span> [<span class="st">"EX_A"</span>, <span class="st">"DM_C"</span>, <span class="st">"v1"</span>, <span class="st">"v2"</span>, <span class="st">"v3"</span>]])</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>model.reactions.EX_A.add_metabolites({<span class="st">"A"</span>: <span class="dv">1</span>})</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>model.reactions.DM_C.add_metabolites({<span class="st">"C"</span>: <span class="op">-</span><span class="dv">1</span>})</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>model.reactions.v1.add_metabolites({<span class="st">"A"</span>: <span class="op">-</span><span class="dv">1</span>, <span class="st">"B"</span>: <span class="dv">1</span>})</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>model.reactions.v2.add_metabolites({<span class="st">"B"</span>: <span class="op">-</span><span class="dv">1</span>, <span class="st">"C"</span>: <span class="dv">1</span>})</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>model.reactions.v3.add_metabolites({<span class="st">"C"</span>: <span class="op">-</span><span class="dv">1</span>, <span class="st">"A"</span>: <span class="dv">1</span>})</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>model.objective <span class="op">=</span> <span class="st">'DM_C'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'Model' is not defined</code></pre>
-</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:57.431246400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:57.408591Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model.add_metabolites([Metabolite(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="st">"ABC"</span>])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>model.add_reactions([Reaction(i) <span class="cf">for</span> i <span class="kw">in</span> [<span class="st">"EX_A"</span>, <span class="st">"DM_C"</span>, <span class="st">"v1"</span>, <span class="st">"v2"</span>, <span class="st">"v3"</span>]])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>model.reactions.EX_A.add_metabolites({<span class="st">"A"</span>: <span class="dv">1</span>})</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>model.reactions.DM_C.add_metabolites({<span class="st">"C"</span>: <span class="op">-</span><span class="dv">1</span>})</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>model.reactions.v1.add_metabolites({<span class="st">"A"</span>: <span class="op">-</span><span class="dv">1</span>, <span class="st">"B"</span>: <span class="dv">1</span>})</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>model.reactions.v2.add_metabolites({<span class="st">"B"</span>: <span class="op">-</span><span class="dv">1</span>, <span class="st">"C"</span>: <span class="dv">1</span>})</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>model.reactions.v3.add_metabolites({<span class="st">"C"</span>: <span class="op">-</span><span class="dv">1</span>, <span class="st">"A"</span>: <span class="dv">1</span>})</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>model.objective <span class="op">=</span> <span class="st">'DM_C'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>虽然此模型包含一个循环，但存在一个通量状态，该通量状态没有通量通过反应<span class="math inline">\(v_3\)</span>，并由无循环 FBA 标识。</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model:</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    add_loopless(model)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    solution <span class="op">=</span> model.optimize()</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loopless solution: status = "</span> <span class="op">+</span> solution.status)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loopless solution flux: v3 = </span><span class="sc">%.1f</span><span class="st">"</span> <span class="op">%</span> solution.fluxes[<span class="st">"v3"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'model' is not defined</code></pre>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:57.498907800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:57.418245800Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    add_loopless(model)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    solution <span class="op">=</span> model.optimize()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loopless solution: status = "</span> <span class="op">+</span> solution.status)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loopless solution flux: v3 = </span><span class="sc">%.1f</span><span class="st">"</span> <span class="op">%</span> solution.fluxes[<span class="st">"v3"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>loopless solution: status = optimal
+loopless solution flux: v3 = 0.0</code></pre>
 </div>
 </div>
 <p>如果没有通过无循环反应的强制通量，则精简的 FBA 也不会有通量通过环路。</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> pfba(model)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"parsimonious solution: status = "</span> <span class="op">+</span> solution.status)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loopless solution flux: v3 = </span><span class="sc">%.1f</span><span class="st">"</span> <span class="op">%</span> solution.fluxes[<span class="st">"v3"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'pfba' is not defined</code></pre>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:57.499908200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:57.453784Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> pfba(model)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"parsimonious solution: status = "</span> <span class="op">+</span> solution.status)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loopless solution flux: v3 = </span><span class="sc">%.1f</span><span class="st">"</span> <span class="op">%</span> solution.fluxes[<span class="st">"v3"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsimonious solution: status = optimal
+loopless solution flux: v3 = 0.0</code></pre>
 </div>
 </div>
 <p>但是，如果通量被强制通过<span class="math inline">\(v_3\)</span>，那么就不再存在可行的无循环解决方案，但简约的解决方案仍将存在。在。</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model.reactions.v3.lower_bound <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model:</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    add_loopless(model)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        solution <span class="op">=</span> model.optimize()</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'model is infeasible'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>model is infeasible</code></pre>
-</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:58.357576Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:58.336983900Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model.reactions.v3.lower_bound <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model:</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    add_loopless(model)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        solution <span class="op">=</span> model.optimize()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'model is infeasible'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/home/cdiener/code/cobrapy/src/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+<pre><code>d:\ProgramData\anaconda3\Lib\site-packages\cobra\util\solver.py:554: UserWarning: Solver status is 'infeasible'.
   warn(f"Solver status is '{status}'.", UserWarning)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> pfba(model)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"parsimonious solution: status = "</span> <span class="op">+</span> solution.status)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loopless solution flux: v3 = </span><span class="sc">%.1f</span><span class="st">"</span> <span class="op">%</span> solution.fluxes[<span class="st">"v3"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:58.811589900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:58.778456Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> pfba(model)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"parsimonious solution: status = "</span> <span class="op">+</span> solution.status)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loopless solution flux: v3 = </span><span class="sc">%.1f</span><span class="st">"</span> <span class="op">%</span> solution.fluxes[<span class="st">"v3"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>parsimonious solution: status = optimal
 loopless solution flux: v3 = 1.0</code></pre>

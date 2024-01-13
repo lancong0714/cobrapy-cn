@@ -282,10 +282,10 @@ v_5 &amp;: C \rightarrow D \\
 v_6 &amp;: D \rightarrow
 \end{align}\]</span></p>
 <p>Here, <span class="math inline">\(v_{x}\)</span>, where <span class="math inline">\(x \in \{1, 2, \ldots, 6\}\)</span> represent the flux carried by the reactions as shown above.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:05:33.047739800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:05:31.150211100Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cobra</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:05:33.070891100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:05:33.054887600Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>test_model <span class="op">=</span> cobra.Model(<span class="st">"test_model"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>v1 <span class="op">=</span> cobra.Reaction(<span class="st">"v1"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>v2 <span class="op">=</span> cobra.Reaction(<span class="st">"v2"</span>)</span>
@@ -321,7 +321,7 @@ unknown metabolite 'C' created</code></pre>
 <section id="使用-fva" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="使用-fva"><span class="header-section-number">11.1</span> 使用 FVA</h2>
 <p>我们可以遵循的第一种方法是使用 FVA（通量可变性分析），在许多其他应用中，它用于检测阻塞反应。 <code>cobra.flux_analysis.find_blocked_reactions()</code> 函数将返回使用 FVA 获得的所有被阻止反应的列表。</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:05:41.349017300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:05:36.147486700Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cobra.flux_analysis.find_blocked_reactions(test_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>['v2']</code></pre>
@@ -332,15 +332,15 @@ unknown metabolite 'C' created</code></pre>
 <section id="使用fastcc" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="使用fastcc"><span class="header-section-number">11.2</span> 使用FASTCC</h2>
 <p>在<code>cobrapy</code>中获得一致网络的第二种方法是使用 FASTCC。使用这种方法，您可以期望有效地获得准确一致的网络。有关该算法的更多详细信息，请参阅<a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003424">Vlassis N, Pacheco MP, Sauter T (2014)</a>.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:05:50.930272800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:05:50.904870200Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>consistent_model <span class="op">=</span> cobra.flux_analysis.fastcc(test_model)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>consistent_model.reactions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>[&lt;Reaction v1 at 0x7fc71ddea5c0&gt;,
- &lt;Reaction v3 at 0x7fc71ddea630&gt;,
- &lt;Reaction v4 at 0x7fc71ddea668&gt;,
- &lt;Reaction v5 at 0x7fc71ddea6a0&gt;,
- &lt;Reaction v6 at 0x7fc71ddea6d8&gt;]</code></pre>
+<pre><code>[&lt;Reaction v1 at 0x21cc26101d0&gt;,
+ &lt;Reaction v3 at 0x21cc27caa50&gt;,
+ &lt;Reaction v4 at 0x21cc27cabd0&gt;,
+ &lt;Reaction v5 at 0x21cc27cad50&gt;,
+ &lt;Reaction v6 at 0x21cc27caf10&gt;]</code></pre>
 </div>
 </div>
 <p>与 FVA 方法类似，我们能够确定 <span class="math inline">\(v_2\)</span> 确实是阻断反应。</p>

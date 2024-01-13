@@ -267,17 +267,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>生长包线（又名表型相平面）将显示出不同的最佳生长阶段，使用两种不同的底物。有关详细信息，请参阅 <a href="http://dx.doi.org/10.1002/bit.10047">Edwards et al.</a></p>
 <p>Cobrapy 支持计算这些Production envelopes，并且可以使用您喜欢的绘图包轻松绘制它们。在这里，我们将为“教科书”制作一个_E.coli_核心模型，并演示使用<a href="http://matplotlib.org/">matplotlib</a>.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:00.360810800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:17:58.205850Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.flux_analysis <span class="im">import</span> production_envelope</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>我们想制作一个表型相平面来评估葡萄糖和氧气的摄取。</p>
-<div class="cell">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:06.179288800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:00.375807600Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>prod_env <span class="op">=</span> production_envelope(model, [<span class="st">"EX_glc__D_e"</span>, <span class="st">"EX_o2_e"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-scrolled="true" data-execution_count="3">
+<div class="cell" data-scrolled="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:06.211813500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:06.185288300Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prod_env.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
@@ -366,11 +366,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>如果我们指定碳源，我们也可以得到碳和质量产量。例如，暂时将目标设置为生产醋酸纤维，我们可以得到如下Production envelopes并且使用pandas来快速绘制结果。</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:06.269276200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:06.202813Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>prod_env <span class="op">=</span> production_envelope(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    model, [<span class="st">"EX_o2_e"</span>], objective<span class="op">=</span><span class="st">"EX_ac_e"</span>, carbon_sources<span class="op">=</span><span class="st">"EX_glc__D_e"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:06.299276400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:06.235445300Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prod_env.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -398,8 +398,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0.0</td>
 <td>0.0</td>
 <td>0.000000</td>
-<td>0.000000</td>
-<td>0.000000</td>
+<td>5.340670e-16</td>
+<td>5.251029e-16</td>
 <td>-60.000000</td>
 </tr>
 <tr class="even">
@@ -409,8 +409,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0.0</td>
 <td>0.0</td>
 <td>1.578947</td>
-<td>0.052632</td>
-<td>0.051748</td>
+<td>5.263158e-02</td>
+<td>5.174819e-02</td>
 <td>-56.842105</td>
 </tr>
 <tr class="odd">
@@ -420,8 +420,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0.0</td>
 <td>0.0</td>
 <td>3.157895</td>
-<td>0.105263</td>
-<td>0.103496</td>
+<td>1.052632e-01</td>
+<td>1.034964e-01</td>
 <td>-53.684211</td>
 </tr>
 <tr class="even">
@@ -431,8 +431,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0.0</td>
 <td>0.0</td>
 <td>4.736842</td>
-<td>0.157895</td>
-<td>0.155245</td>
+<td>1.578947e-01</td>
+<td>1.552446e-01</td>
 <td>-50.526316</td>
 </tr>
 <tr class="odd">
@@ -442,8 +442,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0.0</td>
 <td>0.0</td>
 <td>6.315789</td>
-<td>0.210526</td>
-<td>0.206993</td>
+<td>2.105263e-01</td>
+<td>2.069927e-01</td>
 <td>-47.368421</td>
 </tr>
 </tbody>
@@ -452,10 +452,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:06.706505Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:06.251277300Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:06.920237300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:06.711506800Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>prod_env.plot(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">'line'</span>, x<span class="op">=</span><span class="st">'EX_o2_e'</span>, y<span class="op">=</span><span class="st">'carbon_yield_maximum'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">

@@ -94,9 +94,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -276,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>Cobrapy 支持读取和写入 SBML（带和不带 FBC）、JSON、YAML、MAT 和 pickle 格式的模型。通常情况下，具有 FBC 版本2 的 SBML 是首选格式。JSON 格式对于某些特定于 cobrapy 的功能可能更有用。该软件包还附带各种格式的测试模型，用于测试目的。</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:04.119776600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:54.368316600Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_json_model, save_json_model, load_matlab_model, save_matlab_model, read_sbml_model, write_sbml_model</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
@@ -286,293 +283,99 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mini test files: "</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">", "</span>.join(<span class="bu">str</span>(i) <span class="cf">for</span> i <span class="kw">in</span> data_dir.glob(<span class="st">'mini*.*'</span>)))</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>textbook_model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ecoli_model <span class="op">=</span> load_model(<span class="st">"iJO1366"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>logging.getLogger(<span class="st">"cobra.io.sbml"</span>).setLevel(logging.ERROR)salmonella_model <span class="op">=</span> load_model(<span class="st">"salmonella"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>SyntaxError: invalid syntax (502675030.py, line 13)</code></pre>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>logging.getLogger(<span class="st">"cobra.io.sbml"</span>).setLevel(logging.ERROR)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>salmonella_model <span class="op">=</span> load_model(<span class="st">"salmonella"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mini test files: </code></pre>
 </div>
 </div>
 <section id="sbml" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sbml"><span class="header-section-number">4.1</span> SBML</h2>
 <p><a href="http://sbml.org">Systems Biology Markup Language</a> 是一种基于 XML 的标准格式，用于分发模型，它通过 <a href="http://sbml.org/Documents/Specifications/SBML_Level_3/Packages/Flux_Balance_Constraints_%28flux%29">FBC extension</a>版本 2 支持 COBRA 模型。</p>
 <p>Cobrapy 原生支持使用 FBCv2 读取和写入 SBML。请注意，模型中的所有 ID 都必须符合 SBML SID 要求，才能生成有效的 SBML 文件。</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:04.919544400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:04.125777Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mini_fbc2_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini_fbc2.xml"</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>read_sbml_model(<span class="bu">str</span>(mini_fbc2_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<td><strong>Name</strong></td>
-<td>mini_textbook</td>
-</tr>
-<tr class="even">
-<td><strong>Memory address</strong></td>
-<td>0x07fbe29d69cf8</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of metabolites</strong></td>
-<td>23</td>
-</tr>
-<tr class="even">
-<td><strong>Number of reactions</strong></td>
-<td>18</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of groups</strong></td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td><strong>Objective expression</strong></td>
-<td>1.0*ATPM - 1.0*ATPM_reverse_5b752 + 1.0*PFK - 1.0*PFK_reverse_d24a6</td>
-</tr>
-<tr class="odd">
-<td><strong>Compartments</strong></td>
-<td>cytosol, extracellular</td>
-</tr>
-</tbody>
-</table>
+<div class="cell-output cell-output-error">
+<pre><code>OSError: The file with 'E:\2023-lanc\src\cobra\data\mini_fbc2.xml' does not exist, or is not an SBML string. Provide the path to an existing SBML file or a valid SBML string representation:</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>write_sbml_model(textbook_model, <span class="st">"test_fbc2.xml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:27:03.764992600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:27:03.319951800Z&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>write_sbml_model(textbook_model, <span class="st">"test_fbc2.xml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>在 FBC 2 之前，SBML 还有其他方言，以前曾用于编码 COBRA 模型。主要的是“COBRA”方言，它使用了 SBML 文件中的“notes”字段。</p>
 <p>Cobrapy 可以 libsbml,L），它必须单独安装（请参阅安装说明）来读取和写入这些文件。在模型中读取时，它将自动检测是否使用了全血细胞计数。编写模型时，可以使用 use_fbc_package 标志来编写这种传统“cobra”格式的文件。</p>
 <p>考 lxml e/） 包，因为它可以大大加快解析速度。</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mini_cobra_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini_cobra.xml"</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>read_sbml_model(<span class="bu">str</span>(mini_cobra_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<td><strong>Name</strong></td>
-<td>mini_textbook</td>
-</tr>
-<tr class="even">
-<td><strong>Memory address</strong></td>
-<td>0x07fbe29d693c8</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of metabolites</strong></td>
-<td>23</td>
-</tr>
-<tr class="even">
-<td><strong>Number of reactions</strong></td>
-<td>18</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of groups</strong></td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td><strong>Objective expression</strong></td>
-<td>1.0*ATPM - 1.0*ATPM_reverse_5b752 + 1.0*PFK - 1.0*PFK_reverse_d24a6</td>
-</tr>
-<tr class="odd">
-<td><strong>Compartments</strong></td>
-<td>cytosol, extracellular</td>
-</tr>
-</tbody>
-</table>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:29:17.582880Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:29:17.503413100Z&quot;}" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mini_cobra_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini_cobra.xml"</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>read_sbml_model(<span class="bu">str</span>(mini_cobra_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>OSError: The file with 'E:\2023-lanc\src\cobra\data\mini_cobra.xml' does not exist, or is not an SBML string. Provide the path to an existing SBML file or a valid SBML string representation:</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>write_sbml_model(textbook_model, <span class="st">"test_cobra.xml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:29:12.078624200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:29:12.067264600Z&quot;}" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>write_sbml_model(textbook_model, <span class="st">"test_cobra.xml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="json" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="json"><span class="header-section-number">4.2</span> JSON</h2>
 <p>Cobrapy 模型具有 JSON（JavaScript 对象表示法）表示形式。创建此格式是为了与 escher 的互操作性。</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mini_json_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini.json"</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>load_json_model(<span class="bu">str</span>(mini_json_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<td><strong>Name</strong></td>
-<td>mini_textbook</td>
-</tr>
-<tr class="even">
-<td><strong>Memory address</strong></td>
-<td>0x07fbe29c6ac50</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of metabolites</strong></td>
-<td>23</td>
-</tr>
-<tr class="even">
-<td><strong>Number of reactions</strong></td>
-<td>18</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of groups</strong></td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td><strong>Objective expression</strong></td>
-<td>1.0*ATPM - 1.0*ATPM_reverse_5b752 + 1.0*PFK - 1.0*PFK_reverse_d24a6</td>
-</tr>
-<tr class="odd">
-<td><strong>Compartments</strong></td>
-<td>cytosol, extracellular</td>
-</tr>
-</tbody>
-</table>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:28:04.110489600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:28:04.074726300Z&quot;}" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mini_json_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini.json"</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>load_json_model(<span class="bu">str</span>(mini_json_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>FileNotFoundError: [Errno 2] No such file or directory: 'E:\\2023-lanc\\src\\cobra\\data\\mini.json'</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>save_json_model(textbook_model, <span class="st">"test.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:08.283864700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:08.258581100Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>save_json_model(textbook_model, <span class="st">"test.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="yaml" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="yaml"><span class="header-section-number">4.3</span> YAML</h2>
 <p>Cobrapy 模型具有 YAML（YAML 不是标记语言）表示形式。创建此格式是为了实现更易读的模型表示和模型之间的自动差异而创建的。</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mini_yml_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini.yml"</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>load_yaml_model(<span class="bu">str</span>(mini_yml_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<td><strong>Name</strong></td>
-<td>mini_textbook</td>
-</tr>
-<tr class="even">
-<td><strong>Memory address</strong></td>
-<td>0x07fbe29c6ad30</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of metabolites</strong></td>
-<td>23</td>
-</tr>
-<tr class="even">
-<td><strong>Number of reactions</strong></td>
-<td>18</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of groups</strong></td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td><strong>Objective expression</strong></td>
-<td>1.0*ATPM - 1.0*ATPM_reverse_5b752 + 1.0*PFK - 1.0*PFK_reverse_d24a6</td>
-</tr>
-<tr class="odd">
-<td><strong>Compartments</strong></td>
-<td>cytosol, extracellular</td>
-</tr>
-</tbody>
-</table>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:09.390825Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:09.368533500Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mini_yml_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini.yml"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>load_yaml_model(<span class="bu">str</span>(mini_yml_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'load_yaml_model' is not defined</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>save_yaml_model(textbook_model, <span class="st">"test.yml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:09.739693200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:09.706716400Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>save_yaml_model(textbook_model, <span class="st">"test.yml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'save_yaml_model' is not defined</code></pre>
+</div>
 </div>
 </section>
 <section id="matlab" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="matlab"><span class="header-section-number">4.4</span> MATLAB</h2>
 <p>通常，导入和导出模型可能只是为了在 cobrapy 和 MATLAB cobra 工具箱中使用相同的模型。MATLAB有自己的“.mat”格式来存储变量。从 python 读取和写入这些 mat 文件需要 scipy。</p>
 <p>一个 mat 文件可以包含多个 MATLAB 变量。因此，可以将MATLAB文件中模型的变量名称传递到读取函数中：</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mini_mat_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini.mat"</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>load_matlab_model(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">str</span>(mini_mat_path.resolve()),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    variable_name<span class="op">=</span><span class="st">"mini_textbook"</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<td><strong>Name</strong></td>
-<td>mini_textbook</td>
-</tr>
-<tr class="even">
-<td><strong>Memory address</strong></td>
-<td>0x07fbe29c5dd30</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of metabolites</strong></td>
-<td>23</td>
-</tr>
-<tr class="even">
-<td><strong>Number of reactions</strong></td>
-<td>18</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of groups</strong></td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td><strong>Objective expression</strong></td>
-<td>1.0*ATPM - 1.0*ATPM_reverse_5b752 + 1.0*PFK - 1.0*PFK_reverse_d24a6</td>
-</tr>
-<tr class="odd">
-<td><strong>Compartments</strong></td>
-<td>c, e</td>
-</tr>
-</tbody>
-</table>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:11.165633600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:10.903846900Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mini_mat_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini.mat"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>load_matlab_model(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">str</span>(mini_mat_path.resolve()),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    variable_name<span class="op">=</span><span class="st">"mini_textbook"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>FileNotFoundError: [Errno 2] No such file or directory: 'E:\\2023-lanc\\src\\cobra\\data\\mini.mat'</code></pre>
 </div>
 </div>
 <p>如果 mat 文件只包含单个模型，cobra 可以确定要从哪个变量中读取，并且不需要 variable_name 参数。</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mini_mat_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini.mat"</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>load_matlab_model(<span class="bu">str</span>(mini_mat_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-
-        
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<td><strong>Name</strong></td>
-<td>mini_textbook</td>
-</tr>
-<tr class="even">
-<td><strong>Memory address</strong></td>
-<td>0x07fbe299af940</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of metabolites</strong></td>
-<td>23</td>
-</tr>
-<tr class="even">
-<td><strong>Number of reactions</strong></td>
-<td>18</td>
-</tr>
-<tr class="odd">
-<td><strong>Number of groups</strong></td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td><strong>Objective expression</strong></td>
-<td>1.0*ATPM - 1.0*ATPM_reverse_5b752 + 1.0*PFK - 1.0*PFK_reverse_d24a6</td>
-</tr>
-<tr class="odd">
-<td><strong>Compartments</strong></td>
-<td>c, e</td>
-</tr>
-</tbody>
-</table>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:11.509551600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:11.418254100Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mini_mat_path <span class="op">=</span> data_dir <span class="op">/</span> <span class="st">"mini.mat"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>load_matlab_model(<span class="bu">str</span>(mini_mat_path.resolve()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>FileNotFoundError: [Errno 2] No such file or directory: 'E:\\2023-lanc\\src\\cobra\\data\\mini.mat'</code></pre>
 </div>
 </div>
 <p>将模型保存到 mat 文件也相对简单</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>save_matlab_model(textbook_model, <span class="st">"test.mat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:14:12.533736600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:14:12.369351300Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>save_matlab_model(textbook_model, <span class="st">"test.mat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="pickle" class="level2" data-number="4.5">

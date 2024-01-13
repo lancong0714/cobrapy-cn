@@ -247,7 +247,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#边界反应" id="toc-边界反应" class="nav-link active" data-scroll-target="#边界反应"><span class="header-section-number">12.1</span> 边界反应</a></li>
+  <li><a href="#最小培养基" id="toc-最小培养基" class="nav-link active" data-scroll-target="#最小培养基"><span class="header-section-number">12.1</span> 最小培养基</a></li>
+  <li><a href="#边界反应" id="toc-边界反应" class="nav-link" data-scroll-target="#边界反应"><span class="header-section-number">12.2</span> 边界反应</a></li>
   </ul>
 </nav>
     </div>
@@ -272,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>营养物质的可用性对代谢通量有重大影响，<code>cobrapy</code>为管理外部环境与代谢模型之间的交换提供了一些帮助。在实验环境中，“环境”通常是由生长介质构成的，因此，所有代谢物和辅助因子的浓度都是模型生物可用的。然而，基于约束的代谢模型只考虑通量。因此，不能简单地使用浓度，因为通量的单位是<code>mmol / [gDW h]</code> 每克细胞干重和每小时的浓度)。 此外，您正在为特定导入通量设置上限，而不是为通量本身设置上限。这里有一些粗略的近似。例如，如果你每24小时向1克细菌提供1摩尔葡萄糖，你可以将葡萄糖的最高交换通量设置为1摩尔/<code>1 mol / [1 gDW * 24 h]</code> ，因为这是可以进口的名义最大值。但不能保证葡萄糖会随流量被消耗。因此，交换通量的优选数据是直接通量测量，例如从时间过程外代谢组测量中获得的数据。 那么在 COBRApy 中是什么样子的呢？模型的当前增长介质由“medium”属性管理。</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:32.690467800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:30.538665500Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span>
@@ -288,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>这将返回一个包含所有活动交换通量(具有非零通量边界的交换通量)的通量上限字典。现在我们看到我们已经实现了有氧生长。您可以通过将字典分配给模型来修改模型的生长介质。<code>model.medium</code> ，将交换反应映射到各自的进口上限。现在让我们通过关闭氧气输入来强制厌氧生长。</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:32.707876600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:32.691465500Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>medium <span class="op">=</span> model.medium</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>medium[<span class="st">"EX_o2_e"</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>model.medium <span class="op">=</span> medium</span>
@@ -304,14 +305,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>正如我们所看到的，氧气进口现在从活跃的交换列表中删除，我们可以验证这也导致了较低的增长率。</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:32.744682800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:32.701527700Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model.slim_optimize()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>0.21166294973530736</code></pre>
+<pre><code>0.21166294973531258</code></pre>
 </div>
 </div>
 <p>这里有个小陷阱。 因为<code>model.medium</code>不能直接分配，所以以下操作将不起作用:</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:32.745683Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:32.709876700Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model.medium[<span class="st">"EX_co2_e"</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model.medium</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -324,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>正如你所看到的，<code>EX_co2_e</code>没有设置为零。这是因为model.medium只是当前交换通量的副本。直接用<code>model.medium[...] = ...</code> 不会改变模式。你必须用改变后的导入通量上界来分配整个字典:</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:32.746684200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:32.727605700Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>medium <span class="op">=</span> model.medium</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>medium[<span class="st">"EX_co2_e"</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>model.medium <span class="op">=</span> medium</span>
@@ -339,7 +340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>设置生长介质还连接到上下文管理器，因此您可以以可逆的方式设置特定的生长介质。</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:33.079613900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:32.908274400Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model:</span>
@@ -350,8 +351,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.slim_optimize())</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>model.medium</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.21166294973530736
-0.8739215069684102</code></pre>
+<pre><code>0.21166294973531258
+0.8739215069684315</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>{'EX_co2_e': 1000.0,
@@ -364,14 +365,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>因此，介质变化仅在<code>with</code>块内应用并自动恢复。</p>
-<p>##最小培养基</p>
+<section id="最小培养基" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="最小培养基"><span class="header-section-number">12.1</span> 最小培养基</h2>
 <p>在某些情况下，您可能对能够保持特定生长速率的最小生长介质感兴趣，即所谓的最小介质。为此，我们提供了minimal_medium`函数，默认情况下获得具有最低总进口通量的介质。这个函数需要两个参数:模型和其必须达到的最小增长率(或其他目标)。</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:17:13.126816400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:17:13.117997200Z&quot;}" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.medium <span class="im">import</span> minimal_medium</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>max_growth <span class="op">=</span> model.slim_optimize()</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>minimal_medium(model, max_growth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-stderr">
+<pre><code>d:\ProgramData\anaconda3\Lib\site-packages\cobra\medium\minimal_medium.py:112: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  medium = pd.Series()</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>EX_glc__D_e    10.000000
 EX_nh4_e        4.765319
 EX_o2_e        21.799493
@@ -380,8 +386,12 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>所以我们看到生长实际上受到葡萄糖输入的限制。 或者，您可能对具有最少数量的活动导入的最小介质感兴趣。这可以通过使用<code>minimize_components</code>参数来实现(注意，这使用了MIP公式，因此会慢得多)。</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>minimal_medium(model, <span class="fl">0.1</span>, minimize_components<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:34.102178600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:34.082199100Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>minimal_medium(model, <span class="fl">0.1</span>, minimize_components<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>d:\ProgramData\anaconda3\Lib\site-packages\cobra\medium\minimal_medium.py:112: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  medium = pd.Series()</code></pre>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>EX_glc__D_e    10.00000
 EX_nh4_e        0.54528
@@ -390,8 +400,22 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>在尽量减少进口通量的数量时，可能有许多替代解决方案。为了得到其中的几个，你也可以传递一个正整数来<code>minimize_components</code>，这将给你最多50个备选解。让我们在我们的模型中尝试一下，并使用 <code>open_exchanges</code> 参数，该参数将为模型中的所有进口反应分配一个大的上界。返回类型将是<code>pandas.DataFrame</code>。</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>minimal_medium(model, <span class="fl">0.8</span>, minimize_components<span class="op">=</span><span class="dv">8</span>, open_exchanges<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:34.764854300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:34.650084500Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>minimal_medium(model, <span class="fl">0.8</span>, minimize_components<span class="op">=</span><span class="dv">8</span>, open_exchanges<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>d:\ProgramData\anaconda3\Lib\site-packages\cobra\medium\minimal_medium.py:112: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  medium = pd.Series()
+d:\ProgramData\anaconda3\Lib\site-packages\cobra\medium\minimal_medium.py:112: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  medium = pd.Series()
+d:\ProgramData\anaconda3\Lib\site-packages\cobra\medium\minimal_medium.py:112: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  medium = pd.Series()
+d:\ProgramData\anaconda3\Lib\site-packages\cobra\medium\minimal_medium.py:112: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  medium = pd.Series()
+d:\ProgramData\anaconda3\Lib\site-packages\cobra\medium\minimal_medium.py:112: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  medium = pd.Series()
+d:\ProgramData\anaconda3\Lib\site-packages\cobra\medium\minimal_medium.py:112: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  medium = pd.Series()</code></pre>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
@@ -414,7 +438,7 @@ dtype: float64</code></pre>
 <td>0.000000</td>
 <td>308.82944</td>
 <td>0.00000</td>
-<td>31.58596</td>
+<td>0.000000</td>
 <td>0.000000</td>
 <td>0.000000</td>
 </tr>
@@ -423,8 +447,8 @@ dtype: float64</code></pre>
 <td>0.000000</td>
 <td>0.00000</td>
 <td>308.82944</td>
-<td>0.00000</td>
-<td>31.157104</td>
+<td>31.084608</td>
+<td>502.051914</td>
 <td>0.000000</td>
 </tr>
 <tr class="odd">
@@ -432,25 +456,25 @@ dtype: float64</code></pre>
 <td>0.000000</td>
 <td>0.00000</td>
 <td>0.00000</td>
-<td>2.18112</td>
+<td>2.181120</td>
 <td>0.000000</td>
-<td>18.848678</td>
+<td>0.000000</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">EX_glu__L_e</td>
-<td>277.588056</td>
-<td>6.10840</td>
-<td>6.10840</td>
-<td>0.00000</td>
+<td>346.141716</td>
+<td>4.36224</td>
+<td>4.36224</td>
 <td>0.000000</td>
 <td>0.000000</td>
+<td>24.798770</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">EX_mal__L_e</td>
 <td>0.000000</td>
 <td>0.00000</td>
 <td>0.00000</td>
-<td>0.00000</td>
+<td>0.000000</td>
 <td>0.000000</td>
 <td>1000.000000</td>
 </tr>
@@ -459,8 +483,8 @@ dtype: float64</code></pre>
 <td>0.000000</td>
 <td>0.00000</td>
 <td>0.00000</td>
-<td>0.00000</td>
-<td>4.362240</td>
+<td>0.000000</td>
+<td>8.417918</td>
 <td>0.000000</td>
 </tr>
 <tr class="odd">
@@ -468,18 +492,18 @@ dtype: float64</code></pre>
 <td>500.000000</td>
 <td>0.00000</td>
 <td>0.00000</td>
-<td>0.00000</td>
+<td>0.000000</td>
 <td>0.000000</td>
 <td>0.000000</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">EX_pi_e</td>
-<td>46.944976</td>
-<td>2.94296</td>
+<td>65.104125</td>
 <td>2.94296</td>
 <td>2.94296</td>
 <td>2.942960</td>
-<td>12.583458</td>
+<td>5.679100</td>
+<td>15.546299</td>
 </tr>
 </tbody>
 </table>
@@ -488,53 +512,54 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>所以总共有4个解。一个好氧和三个厌氧使用不同的碳源。</p>
-<section id="边界反应" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="边界反应"><span class="header-section-number">12.1</span> 边界反应</h2>
+</section>
+<section id="边界反应" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="边界反应"><span class="header-section-number">12.2</span> 边界反应</h2>
 <p>除交换反应外，还有其他类型的边界反应，如需求反应或吸收反应。<code>cobrapy</code> 使用各种启发式方法来识别它们，并且可以通过使用适当的属性来访问它们。对于交换反应:</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ecoli <span class="op">=</span> load_model(<span class="st">"iJO1366"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ecoli.exchanges[<span class="dv">0</span>:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:39.166015Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:35.404772500Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ecoli <span class="op">=</span> load_model(<span class="st">"iJO1366"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ecoli.exchanges[<span class="dv">0</span>:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>[&lt;Reaction EX_12ppd__R_e at 0x7f88afe3dcf8&gt;,
- &lt;Reaction EX_12ppd__S_e at 0x7f88afe7c240&gt;,
- &lt;Reaction EX_14glucan_e at 0x7f88afe46240&gt;,
- &lt;Reaction EX_15dap_e at 0x7f88afe46278&gt;,
- &lt;Reaction EX_23camp_e at 0x7f88afe463c8&gt;]</code></pre>
+<pre><code>[&lt;Reaction EX_12ppd__R_e at 0x21342599f10&gt;,
+ &lt;Reaction EX_12ppd__S_e at 0x21342576390&gt;,
+ &lt;Reaction EX_14glucan_e at 0x21342576350&gt;,
+ &lt;Reaction EX_15dap_e at 0x21342576750&gt;,
+ &lt;Reaction EX_23camp_e at 0x21342576b10&gt;]</code></pre>
 </div>
 </div>
 <p>对于需求反应:</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ecoli.demands</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:39.239273900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:39.170435300Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ecoli.demands</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>[&lt;Reaction DM_4crsol_c at 0x7f88afe3d208&gt;,
- &lt;Reaction DM_5drib_c at 0x7f88afe3d2e8&gt;,
- &lt;Reaction DM_aacald_c at 0x7f88afe3d400&gt;,
- &lt;Reaction DM_amob_c at 0x7f88afe3d630&gt;,
- &lt;Reaction DM_mththf_c at 0x7f88afe3d7b8&gt;,
- &lt;Reaction DM_oxam_c at 0x7f88afe3d8d0&gt;]</code></pre>
+<pre><code>[&lt;Reaction DM_4crsol_c at 0x21342573a50&gt;,
+ &lt;Reaction DM_5drib_c at 0x21342573bd0&gt;,
+ &lt;Reaction DM_aacald_c at 0x21342574450&gt;,
+ &lt;Reaction DM_amob_c at 0x21342574810&gt;,
+ &lt;Reaction DM_mththf_c at 0x21342574c10&gt;,
+ &lt;Reaction DM_oxam_c at 0x21342574fd0&gt;]</code></pre>
 </div>
 </div>
 <p>对于汇反应:</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ecoli.sinks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:17:41.249397700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:17:41.205445800Z&quot;}" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ecoli.sinks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>[]</code></pre>
 </div>
 </div>
 <p>所有边界反应(任何消耗或引入质量到系统中的反应)都可以用<code>boundary</code>属性获得:</p>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ecoli.boundary[<span class="dv">0</span>:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:15:39.263367700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:15:39.241271700Z&quot;}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ecoli.boundary[<span class="dv">0</span>:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>[&lt;Reaction DM_4crsol_c at 0x7f88afe3d208&gt;,
- &lt;Reaction DM_5drib_c at 0x7f88afe3d2e8&gt;,
- &lt;Reaction DM_aacald_c at 0x7f88afe3d400&gt;,
- &lt;Reaction DM_amob_c at 0x7f88afe3d630&gt;,
- &lt;Reaction DM_mththf_c at 0x7f88afe3d7b8&gt;,
- &lt;Reaction DM_oxam_c at 0x7f88afe3d8d0&gt;,
- &lt;Reaction EX_12ppd__R_e at 0x7f88afe3dcf8&gt;,
- &lt;Reaction EX_12ppd__S_e at 0x7f88afe7c240&gt;,
- &lt;Reaction EX_14glucan_e at 0x7f88afe46240&gt;,
- &lt;Reaction EX_15dap_e at 0x7f88afe46278&gt;]</code></pre>
+<pre><code>[&lt;Reaction DM_4crsol_c at 0x21342573a50&gt;,
+ &lt;Reaction DM_5drib_c at 0x21342573bd0&gt;,
+ &lt;Reaction DM_aacald_c at 0x21342574450&gt;,
+ &lt;Reaction DM_amob_c at 0x21342574810&gt;,
+ &lt;Reaction DM_mththf_c at 0x21342574c10&gt;,
+ &lt;Reaction DM_oxam_c at 0x21342574fd0&gt;,
+ &lt;Reaction EX_12ppd__R_e at 0x21342599f10&gt;,
+ &lt;Reaction EX_12ppd__S_e at 0x21342576390&gt;,
+ &lt;Reaction EX_14glucan_e at 0x21342576350&gt;,
+ &lt;Reaction EX_15dap_e at 0x21342576750&gt;]</code></pre>
 </div>
 </div>
 

@@ -246,6 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#建立动态系统" id="toc-建立动态系统" class="nav-link active" data-scroll-target="#建立动态系统"><span class="header-section-number">15.1</span> 建立动态系统</a></li>
   <li><a href="#运行动态fba模拟" id="toc-运行动态fba模拟" class="nav-link" data-scroll-target="#运行动态fba模拟"><span class="header-section-number">15.2</span> 运行动态FBA模拟</a></li>
+  <li><a href="#绘制生物量和葡萄糖的时间表" id="toc-绘制生物量和葡萄糖的时间表" class="nav-link" data-scroll-target="#绘制生物量和葡萄糖的时间表"><span class="header-section-number">15.3</span> 绘制生物量和葡萄糖的时间表</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>下面的笔记本展示了一个使用COBRApy和<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">scipy.integrate.solve_ivp</a>. 实现dFBA的简单但缓慢的示例。本手册展示了一个静态优化方法(SOA)实现，不应将其视为已准备就绪的产品。该模型只考虑了基本的Michaelis-Menten对葡萄糖的限制生长。</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:44.693446600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:44.690892100Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -278,154 +279,132 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>ModuleNotFoundError: No module named 'tqdm'</code></pre>
-</div>
 </div>
 <p>创建或加载一个网格模型。在这里，我们使用“教科书”大肠杆菌核心模型。</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cobra</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">'textbook'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:48.963504300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:46.158398100Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cobra</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">'textbook'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="建立动态系统" class="level2" data-number="15.1">
 <h2 data-number="15.1" class="anchored" data-anchor-id="建立动态系统"><span class="header-section-number">15.1</span> 建立动态系统</h2>
 <p>动态通量平衡分析将细胞外浓度的动态系统与伪稳态代谢模型耦合在一起。在本手册中，我们定义了<code>add_dynamic_bounds(model, y)</code>函数，即将外部代谢物浓度转换为代谢模型中边界通量的边界</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_dynamic_bounds(model, y):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Use external concentrations to bound the uptake flux of glucose."""</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    biomass, glucose <span class="op">=</span> y  <span class="co"># expand the boundary species</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    glucose_max_import <span class="op">=</span> <span class="op">-</span><span class="dv">10</span> <span class="op">*</span> glucose <span class="op">/</span> (<span class="dv">5</span> <span class="op">+</span> glucose)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    model.reactions.EX_glc__D_e.lower_bound <span class="op">=</span> glucose_max_import</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dynamic_system(t, y):</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the time derivative of external species."""</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    biomass, glucose <span class="op">=</span> y  <span class="co"># expand the boundary species</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the specific exchanges fluxes at the given external concentrations.</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        add_dynamic_bounds(model, y)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        cobra.util.add_lp_feasibility(model)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        feasibility <span class="op">=</span> cobra.util.fix_objective_as_constraint(model)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        lex_constraints <span class="op">=</span> cobra.util.add_lexicographic_constraints(</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            model, [<span class="st">'Biomass_Ecoli_core'</span>, <span class="st">'EX_glc__D_e'</span>], [<span class="st">'max'</span>, <span class="st">'max'</span>])</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Since the calculated fluxes are specific rates, we multiply them by the</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># biomass concentration to get the bulk exchange rates.</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    fluxes <span class="op">=</span> lex_constraints.values</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    fluxes <span class="op">*=</span> biomass</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This implementation is **not** efficient, so I display the current</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simulation time using a progress bar.</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dynamic_system.pbar <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        dynamic_system.pbar.update(<span class="dv">1</span>)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        dynamic_system.pbar.set_description(<span class="st">'t = </span><span class="sc">{:.3f}</span><span class="st">'</span>.<span class="bu">format</span>(t))</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fluxes</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>dynamic_system.pbar <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> infeasible_event(t, y):</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">    Determine solution feasibility.</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">    Avoiding infeasible solutions is handled by solve_ivp's built-in event detection.</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">    This function re-solves the LP to determine whether or not the solution is feasible</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">    (and if not, how far it is from feasibility). When the sign of this function changes</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">    from -epsilon to positive, we know the solution is no longer feasible.</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        add_dynamic_bounds(model, y)</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        cobra.util.add_lp_feasibility(model)</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        feasibility <span class="op">=</span> cobra.util.fix_objective_as_constraint(model)</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> feasibility <span class="op">-</span> infeasible_event.epsilon</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>infeasible_event.epsilon <span class="op">=</span> <span class="fl">1E-6</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>infeasible_event.direction <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>infeasible_event.terminal <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:08:51.933016800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:51.910987300Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_dynamic_bounds(model, y):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Use external concentrations to bound the uptake flux of glucose."""</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    biomass, glucose <span class="op">=</span> y  <span class="co"># expand the boundary species</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    glucose_max_import <span class="op">=</span> <span class="op">-</span><span class="dv">10</span> <span class="op">*</span> glucose <span class="op">/</span> (<span class="dv">5</span> <span class="op">+</span> glucose)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    model.reactions.EX_glc__D_e.lower_bound <span class="op">=</span> glucose_max_import</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dynamic_system(t, y):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the time derivative of external species."""</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    biomass, glucose <span class="op">=</span> y  <span class="co"># expand the boundary species</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the specific exchanges fluxes at the given external concentrations.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        add_dynamic_bounds(model, y)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        cobra.util.add_lp_feasibility(model)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        feasibility <span class="op">=</span> cobra.util.fix_objective_as_constraint(model)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        lex_constraints <span class="op">=</span> cobra.util.add_lexicographic_constraints(</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            model, [<span class="st">'Biomass_Ecoli_core'</span>, <span class="st">'EX_glc__D_e'</span>], [<span class="st">'max'</span>, <span class="st">'max'</span>])</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Since the calculated fluxes are specific rates, we multiply them by the</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># biomass concentration to get the bulk exchange rates.</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    fluxes <span class="op">=</span> lex_constraints.values</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    fluxes <span class="op">*=</span> biomass</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This implementation is **not** efficient, so I display the current</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simulation time using a progress bar.</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dynamic_system.pbar <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        dynamic_system.pbar.update(<span class="dv">1</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        dynamic_system.pbar.set_description(<span class="st">'t = </span><span class="sc">{:.3f}</span><span class="st">'</span>.<span class="bu">format</span>(t))</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fluxes</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>dynamic_system.pbar <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> infeasible_event(t, y):</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co">    Determine solution feasibility.</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">    Avoiding infeasible solutions is handled by solve_ivp's built-in event detection.</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">    This function re-solves the LP to determine whether or not the solution is feasible</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co">    (and if not, how far it is from feasibility). When the sign of this function changes</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">    from -epsilon to positive, we know the solution is no longer feasible.</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        add_dynamic_bounds(model, y)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        cobra.util.add_lp_feasibility(model)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        feasibility <span class="op">=</span> cobra.util.fix_objective_as_constraint(model)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> feasibility <span class="op">-</span> infeasible_event.epsilon</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>infeasible_event.epsilon <span class="op">=</span> <span class="fl">1E-6</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>infeasible_event.direction <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>infeasible_event.terminal <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="运行动态fba模拟" class="level2" data-number="15.2">
 <h2 data-number="15.2" class="anchored" data-anchor-id="运行动态fba模拟"><span class="header-section-number">15.2</span> 运行动态FBA模拟</h2>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">100</span>)  <span class="co"># Desired integration resolution and interval</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y0 <span class="op">=</span> [<span class="fl">0.1</span>, <span class="dv">10</span>]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tqdm() <span class="im">as</span> pbar:</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    dynamic_system.pbar <span class="op">=</span> pbar</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        fun<span class="op">=</span>dynamic_system,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        events<span class="op">=</span>[infeasible_event],</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        t_span<span class="op">=</span>(ts.<span class="bu">min</span>(), ts.<span class="bu">max</span>()),</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        y0<span class="op">=</span>y0,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>ts,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        rtol<span class="op">=</span><span class="fl">1e-6</span>,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        atol<span class="op">=</span><span class="fl">1e-8</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        method<span class="op">=</span><span class="st">'BDF'</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:09:21.376022600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:08:56.940447100Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">100</span>)  <span class="co"># Desired integration resolution and interval</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y0 <span class="op">=</span> [<span class="fl">0.1</span>, <span class="dv">10</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tqdm() <span class="im">as</span> pbar:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    dynamic_system.pbar <span class="op">=</span> pbar</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        fun<span class="op">=</span>dynamic_system,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        events<span class="op">=</span>[infeasible_event],</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        t_span<span class="op">=</span>(ts.<span class="bu">min</span>(), ts.<span class="bu">max</span>()),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        y0<span class="op">=</span>y0,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>ts,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        rtol<span class="op">=</span><span class="fl">1e-6</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        atol<span class="op">=</span><span class="fl">1e-8</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        method<span class="op">=</span><span class="st">'BDF'</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>t = 5.804: : 185it [00:05, 34.89it/s]</code></pre>
+<pre><code>t = 5.804: : 185it [00:24,  7.57it/s]</code></pre>
 </div>
 </div>
 <p>因为培养物的葡萄糖耗尽，模拟提前终止。这个“细胞死亡”的确切时间记录在<code>sol.t_events</code>。</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sol</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>  message: 'A termination event occurred.'
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:09:21.399077100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:09:21.379022900Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sol</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>  message: A termination event occurred.
+  success: True
+   status: 1
+        t: [ 0.000e+00  1.515e-01 ...  5.606e+00  5.758e+00]
+        y: [[ 1.000e-01  1.090e-01 ...  8.715e-01  8.727e-01]
+            [ 1.000e+01  9.895e+00 ...  3.476e-01  2.710e-01]]
+      sol: None
+ t_events: [array([ 5.802e+00])]
+ y_events: [array([[ 8.728e-01,  2.518e-01]])]
      nfev: 179
      njev: 2
-      nlu: 14
-      sol: None
-   status: 1
-  success: True
-        t: array([0.        , 0.15151515, 0.3030303 , 0.45454545, 0.60606061,
-       0.75757576, 0.90909091, 1.06060606, 1.21212121, 1.36363636,
-       1.51515152, 1.66666667, 1.81818182, 1.96969697, 2.12121212,
-       2.27272727, 2.42424242, 2.57575758, 2.72727273, 2.87878788,
-       3.03030303, 3.18181818, 3.33333333, 3.48484848, 3.63636364,
-       3.78787879, 3.93939394, 4.09090909, 4.24242424, 4.39393939,
-       4.54545455, 4.6969697 , 4.84848485, 5.        , 5.15151515,
-       5.3030303 , 5.45454545, 5.60606061, 5.75757576])
- t_events: [array([5.80191035])]
-        y: array([[ 0.1       ,  0.10897602,  0.11871674,  0.12927916,  0.14072254,
-         0.15310825,  0.16649936,  0.18095988,  0.19655403,  0.21334507,
-         0.23139394,  0.25075753,  0.27148649,  0.29362257,  0.31719545,
-         0.34221886,  0.36868605,  0.3965646 ,  0.42579062,  0.4562623 ,
-         0.48783322,  0.52030582,  0.55342574,  0.58687742,  0.62028461,
-         0.65321433,  0.685188  ,  0.71570065,  0.74425054,  0.77037369,
-         0.79368263,  0.81390289,  0.83089676,  0.84467165,  0.85535715,
-         0.8631722 ,  0.86843813,  0.8715096 ,  0.8727423 ],
-       [10.        ,  9.8947027 ,  9.78040248,  9.65642157,  9.52205334,
-         9.37656372,  9.21919615,  9.04917892,  8.86573366,  8.6680879 ,
-         8.45549026,  8.22722915,  7.98265735,  7.72122137,  7.442497  ,
-         7.14623236,  6.83239879,  6.50124888,  6.15338213,  5.78981735,
-         5.41206877,  5.02222068,  4.62299297,  4.21779303,  3.81071525,
-         3.40650104,  3.01042208,  2.6280723 ,  2.26504645,  1.92656158,
-         1.61703023,  1.33965598,  1.09616507,  0.88670502,  0.70995892,
-         0.56344028,  0.44387781,  0.34762375,  0.27100065]])
- y_events: [array([[0.87280538, 0.25178492]])]</code></pre>
+      nlu: 14</code></pre>
 </div>
 </div>
-<p>###绘制生物量和葡萄糖的时间表</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.subplot(<span class="dv">111</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ax.plot(sol.t, sol.y.T[:, <span class="dv">0</span>])</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> plt.twinx(ax)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ax2.plot(sol.t, sol.y.T[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Biomass'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Glucose'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+</section>
+<section id="绘制生物量和葡萄糖的时间表" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="绘制生物量和葡萄糖的时间表"><span class="header-section-number">15.3</span> 绘制生物量和葡萄糖的时间表</h2>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:09:21.621484Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:09:21.388080700Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.subplot(<span class="dv">111</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ax.plot(sol.t, sol.y.T[:, <span class="dv">0</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> plt.twinx(ax)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ax2.plot(sol.t, sol.y.T[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Biomass'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Glucose'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>Text(0, 0.5, 'Glucose')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
