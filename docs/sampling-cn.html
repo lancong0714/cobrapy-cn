@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Cobrapy中文文档 - 8&nbsp; 通量取样</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./loopless-cn.html" rel="next">
+<link href="./phenotype_phase_plane-cn.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sampling-cn.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">通量取样</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Cobrapy中文文档</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./getting_started-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">快速上手指南</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./configuration-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">全局配置</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./building_model-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">构建模型</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./io-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">读写模型</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simulating-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">使用FBA进行模拟</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./deletions-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">模拟删除</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./phenotype_phase_plane-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">生长包线</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sampling-cn.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">通量取样</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loopless-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">无循环FBA</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gapfilling-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">缺口填充</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./consistency-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">一致性测试</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./media-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">生长培养基</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./solvers-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">求解器</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./constraints_objectives-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">量身定制的约束、变量和目标</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dfba-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">在COBRApy动态通量平衡分析(dFBA)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./faq-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">常见问题解答</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#基本用法" id="toc-基本用法" class="nav-link active" data-scroll-target="#基本用法"><span class="header-section-number">8.1</span> 基本用法</a></li>
+  <li><a href="#高级使用方法" id="toc-高级使用方法" class="nav-link" data-scroll-target="#高级使用方法"><span class="header-section-number">8.2</span> 高级使用方法</a>
+  <ul class="collapse">
+  <li><a href="#采样目标" id="toc-采样目标" class="nav-link" data-scroll-target="#采样目标"><span class="header-section-number">8.2.1</span> 采样目标</a></li>
+  <li><a href="#采样和验证" id="toc-采样和验证" class="nav-link" data-scroll-target="#采样和验证"><span class="header-section-number">8.2.2</span> 采样和验证</a></li>
+  <li><a href="#批量抽样" id="toc-批量抽样" class="nav-link" data-scroll-target="#批量抽样"><span class="header-section-number">8.2.3</span> 批量抽样</a></li>
+  </ul></li>
+  <li><a href="#添加约束" id="toc-添加约束" class="nav-link" data-scroll-target="#添加约束"><span class="header-section-number">8.3</span> 添加约束</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">通量取样</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="基本用法" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="基本用法"><span class="header-section-number">8.1</span> 基本用法</h2>
+<p>开始使用通量采样的最简单的方法是在<code>flux_analysis</code> 子模块的<code>sample</code> 功能。<code>sample</code>至少接受俩个参数：cobra模型以及要生成的样本数量。</p>
+<div id="cell-3" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-20T08:51:59.278418600Z&quot;,&quot;start_time&quot;:&quot;2024-01-20T08:51:47.623369100Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.sampling <span class="im">import</span> sample</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> sample(model, <span class="dv">100</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>s.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ACALD</th>
+<th data-quarto-table-cell-role="th">ACALDt</th>
+<th data-quarto-table-cell-role="th">ACKr</th>
+<th data-quarto-table-cell-role="th">ACONTa</th>
+<th data-quarto-table-cell-role="th">ACONTb</th>
+<th data-quarto-table-cell-role="th">ACt2r</th>
+<th data-quarto-table-cell-role="th">ADK1</th>
+<th data-quarto-table-cell-role="th">AKGDH</th>
+<th data-quarto-table-cell-role="th">AKGt2r</th>
+<th data-quarto-table-cell-role="th">ALCD2x</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">RPI</th>
+<th data-quarto-table-cell-role="th">SUCCt2_2</th>
+<th data-quarto-table-cell-role="th">SUCCt3</th>
+<th data-quarto-table-cell-role="th">SUCDi</th>
+<th data-quarto-table-cell-role="th">SUCOAS</th>
+<th data-quarto-table-cell-role="th">TALA</th>
+<th data-quarto-table-cell-role="th">THD2</th>
+<th data-quarto-table-cell-role="th">TKT1</th>
+<th data-quarto-table-cell-role="th">TKT2</th>
+<th data-quarto-table-cell-role="th">TPI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>-3.799475</td>
+<td>-2.498751</td>
+<td>-1.421441</td>
+<td>7.540352</td>
+<td>7.540352</td>
+<td>-1.421441</td>
+<td>16.929342</td>
+<td>6.483571</td>
+<td>-0.338296</td>
+<td>-1.300724</td>
+<td>...</td>
+<td>-1.499339</td>
+<td>14.876146</td>
+<td>15.591381</td>
+<td>566.653991</td>
+<td>-6.483571</td>
+<td>1.464935</td>
+<td>1.833969</td>
+<td>1.464935</td>
+<td>1.451100</td>
+<td>8.457706</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>-1.664563</td>
+<td>-1.159660</td>
+<td>-0.104808</td>
+<td>10.096309</td>
+<td>10.096309</td>
+<td>-0.104808</td>
+<td>21.034965</td>
+<td>9.031672</td>
+<td>-0.102474</td>
+<td>-0.504903</td>
+<td>...</td>
+<td>-1.458747</td>
+<td>2.293237</td>
+<td>3.284039</td>
+<td>484.075418</td>
+<td>-9.031672</td>
+<td>1.434034</td>
+<td>48.090638</td>
+<td>1.434034</td>
+<td>1.424095</td>
+<td>7.472630</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>-1.803558</td>
+<td>-1.667910</td>
+<td>-2.144206</td>
+<td>8.824075</td>
+<td>8.824075</td>
+<td>-2.144206</td>
+<td>11.796768</td>
+<td>2.727459</td>
+<td>-0.121884</td>
+<td>-0.135648</td>
+<td>...</td>
+<td>-1.705485</td>
+<td>1.930752</td>
+<td>2.053874</td>
+<td>721.454310</td>
+<td>-2.727459</td>
+<td>1.681770</td>
+<td>75.179992</td>
+<td>1.681770</td>
+<td>1.672234</td>
+<td>7.402820</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>-1.448489</td>
+<td>-0.122990</td>
+<td>-1.631803</td>
+<td>9.828801</td>
+<td>9.828801</td>
+<td>-1.631803</td>
+<td>22.691294</td>
+<td>5.339959</td>
+<td>-0.201254</td>
+<td>-1.325499</td>
+<td>...</td>
+<td>-1.986551</td>
+<td>10.169471</td>
+<td>11.442413</td>
+<td>684.373359</td>
+<td>-5.339959</td>
+<td>1.892144</td>
+<td>36.876984</td>
+<td>1.892144</td>
+<td>1.854180</td>
+<td>7.635212</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>-0.751012</td>
+<td>-0.234146</td>
+<td>-1.534250</td>
+<td>10.996159</td>
+<td>10.996159</td>
+<td>-1.534250</td>
+<td>2.346065</td>
+<td>5.583547</td>
+<td>-0.695630</td>
+<td>-0.516866</td>
+<td>...</td>
+<td>-3.448945</td>
+<td>1.012854</td>
+<td>2.196951</td>
+<td>624.064170</td>
+<td>-5.583547</td>
+<td>3.400375</td>
+<td>19.158341</td>
+<td>3.400375</td>
+<td>3.380843</td>
+<td>6.447869</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 95 columns</p>
+</div>
+</div>
+</div>
+<p>默认情况下，sample 使用基于此处 <a href="http://dx.doi.org/10.1371/journal.pone.0086587">method presented here</a>介绍的方法的<code>optgp</code>方法，因为它适用于较大的模型，并且可以并行运行。默认情况下，采样器使用单个进程。这可以通过使用 <code>processes</code>参数进行更改</p>
+<div id="cell-5" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-20T08:52:49.129464Z&quot;,&quot;start_time&quot;:&quot;2024-01-20T08:51:59.153394100Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"One process:"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>time s <span class="op">=</span> sample(model, <span class="dv">1000</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Two processes:"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>time s <span class="op">=</span> sample(model, <span class="dv">1000</span>, processes<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>One process:
+CPU times: total: 20.8 s
+Wall time: 15.8 s
+Two processes:
+CPU times: total: 1.92 s
+Wall time: 34 s</code></pre>
+</div>
+</div>
+<p>或者，您也可以通过将方法设置为“achr”来使用 Artificial Centering Hit-and-Run 进行采样。 ‘achr’ 不支持并行执行，但收敛性好，几乎是马尔可夫式的。</p>
+<div id="cell-7" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:43.449545200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:42.493220700Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> sample(model, <span class="dv">100</span>, method<span class="op">=</span><span class="st">"achr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>一般来说，设置采样器的成本很高，因为初始搜索方向是通过解决许多线性规划问题生成的。因此，我们建议一次性生成尽可能多的样品。但是，这可能需要对采样过程进行更精细的控制，如下一节所述。</p>
+</section>
+<section id="高级使用方法" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="高级使用方法"><span class="header-section-number">8.2</span> 高级使用方法</h2>
+<section id="采样目标" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="采样目标"><span class="header-section-number">8.2.1</span> 采样目标</h3>
+<p>通过直接使用采样器类，可以在较低级别上控制采样过程。</p>
+<div id="cell-12" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:43.486587500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:43.456550600Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.sampling <span class="im">import</span> OptGPSampler, ACHRSampler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这两个采样器类都具有标准化的接口，并采用一些额外的参数。例如，“变薄”因素。“减薄”是指每 n 次迭代仅记录样本。较高的稀化系数意味着较少的相关样本，但计算时间也较长。默认情况下，采样器使用 100 的稀疏因子，这会创建大致不相关的样本。如果您想要更少的样品但更好的混合，请随时增加此参数。如果要研究自己的模型的收敛性，则可能需要将其设置为 1 以获取所有迭代。</p>
+<div id="cell-14" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:43.595508800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:43.467585100Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>achr <span class="op">=</span> ACHRSampler(model, thinning<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>OptGPSampler</code>有一个额外的 <code>processes</code>参数，用于指定用于创建并行采样链的进程数。这应该按照 CPU 内核的顺序排列，以实现最大效率。如前所述，由于生成初始搜索方向，类初始化可能需要几分钟时间。另一方面，采样速度很快。</p>
+<div id="cell-16" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:43.807313400Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:43.597508700Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>optgp <span class="op">=</span> OptGPSampler(model, processes<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="采样和验证" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="采样和验证"><span class="header-section-number">8.2.2</span> 采样和验证</h3>
+<p>两个采样器都有一个示例函数，该函数从初始化的对象生成样本，其作用类似于上面描述的 <code>sample</code>函数，只是这次它只接受一个参数，即样本数。对于<code>OptGPSampler</code>，样本数应为进程数的倍数，否则将自动增加到最接近的倍数。</p>
+<div id="cell-19" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:47.108401300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:43.809315400Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> achr.sample(<span class="dv">100</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> optgp.sample(<span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can<code>sample</code>ample<code>repeatedly and both samplers are optimized to generate large amount of samples without falling into "numerical traps". All sampler objects have a</code>validate` function in order to check if a set of points are feasible and give detailed information about feasibility violations in a form of a short code denoting feasibility. Here the short code is a combination of any of the following letters:</p>
+<ul>
+<li>“v” - valid point</li>
+<li>“l” - lower bound violation</li>
+<li>“u” - upper bound violation</li>
+<li>“e” - equality violation (meaning the point is not a steady state)</li>
+</ul>
+<p>For instance for a random flux distribution (should not be feasible):</p>
+<div id="cell-21" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:47.131208100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:47.114408100Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>bad <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="dv">1000</span>, <span class="dv">1000</span>, size<span class="op">=</span><span class="bu">len</span>(model.reactions))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>achr.validate(np.atleast_2d(bad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>array(['le'], dtype='&lt;U3')</code></pre>
+</div>
+</div>
+<p>对于我们生成的样本：</p>
+<div id="cell-23" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:47.161304100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:47.133204900Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>achr.validate(s1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>array(['v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v',
+       'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v',
+       'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v',
+       'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v',
+       'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v',
+       'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v',
+       'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v',
+       'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v'], dtype='&lt;U3')</code></pre>
+</div>
+</div>
+<p>尽管大多数模型在数值上足够稳定，采样器应该只生成有效样本，但我们仍然敦促检查这一点。<code>validate</code> 非常快，即使对于大型模型和许多样本也能快速工作。如果发现无效样本，则不必重新运行整个样本，但可以从示例 DataFrame 中排除它们。</p>
+<div id="cell-25" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:18:47.199299600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:47.145157900Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>s1_valid <span class="op">=</span> s1[achr.validate(s1) <span class="op">==</span> <span class="st">"v"</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(s1_valid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>100</code></pre>
+</div>
+</div>
+</section>
+<section id="批量抽样" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="批量抽样"><span class="header-section-number">8.2.3</span> 批量抽样</h3>
+<p>采样器对象用于生成数十亿个样本，但是在使用基因组规模模型时，使用“样本”功能可能会很快填满您的 RAM。在这里，采样器对象的<code>sample</code>方法可能会派上用场。 <code>batch</code> 有两个参数，即每批中的样本数和批数。举个小例子，这是有道理的。</p>
+<p>让我们假设我们想要量化样本中将增长的比例。为此，我们可能需要生成 10 批，每批 50 个样本，并测量单个 100 个样本中显示大于 0.1 的百分比。最后，我们要计算这些单个百分比的平均值和标准差。</p>
+<div id="cell-28" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:19:18.033269Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:18:47.161304100Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [np.mean(s.Biomass_Ecoli_core <span class="op">&gt;</span> <span class="fl">0.1</span>) <span class="cf">for</span> s <span class="kw">in</span> optgp.batch(<span class="dv">100</span>, <span class="dv">10</span>)]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Usually </span><span class="sc">{:.2f}</span><span class="st">% +- </span><span class="sc">{:.2f}% g</span><span class="st">row..."</span>.<span class="bu">format</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    np.mean(counts) <span class="op">*</span> <span class="fl">100.0</span>, np.std(counts) <span class="op">*</span> <span class="fl">100.0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Usually 3.00% +- 0.77% grow...</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="添加约束" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="添加约束"><span class="header-section-number">8.3</span> 添加约束</h2>
+<p>通量采样将遵循模型中定义的其他约束条件。例如，我们可以添加一个约束，以与上一节类似的方式强制增长。</p>
+<div id="cell-31" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:19:18.042039200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:19:18.033269Z&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>co <span class="op">=</span> model.problem.Constraint(model.reactions.Biomass_Ecoli_core.flux_expression, lb<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>model.add_cons_vars([co])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>请注意，这仅用于演示目的。通常，您可以直接设置反应的下限，而不是创建新约束。</em></p>
+<div id="cell-33" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:19:18.330154600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:19:18.047041100Z&quot;}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> sample(model, <span class="dv">10</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s.Biomass_Ecoli_core)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    0.105278
+1    0.126172
+2    0.108318
+3    0.105436
+4    0.100796
+5    0.154830
+6    0.155173
+7    0.177615
+8    0.193415
+9    0.148553
+Name: Biomass_Ecoli_core, dtype: float64</code></pre>
+</div>
+</div>
+<p>正如我们所看到的，我们的新约束被接受了。</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./phenotype_phase_plane-cn.html" class="pagination-link" aria-label="生长包线">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">生长包线</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./loopless-cn.html" class="pagination-link" aria-label="无循环FBA">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">无循环FBA</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

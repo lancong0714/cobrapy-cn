@@ -1,0 +1,35 @@
+project:
+  type: book
+
+book:
+  title: "Cobrapy中文文档"
+  author: "兰聪-华中农业大学资环学院"
+  date: "2023/11/28"
+  chapters:
+    - index.qmd
+    - "getting_started-cn.ipynb" 
+    - "configuration-cn.ipynb" 
+    - "building_model-cn.ipynb" 
+    - "io-cn.ipynb"
+    - "simulating-cn.ipynb"
+    - "deletions-cn.ipynb"
+    - "phenotype_phase_plane-cn.ipynb"
+    - "sampling-cn.ipynb"
+    - "loopless-cn.ipynb"
+    - "gapfilling-cn.ipynb"
+    - "consistency-cn.ipynb" 
+    - "media-cn.ipynb"
+    - "solvers-cn.ipynb"
+    - "constraints_objectives-cn.ipynb"
+    - "dfba-cn.ipynb"
+    - "faq-cn.ipynb"
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

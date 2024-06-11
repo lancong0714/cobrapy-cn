@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Cobrapy中文文档 - 1&nbsp; 快速上手指南</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./configuration-cn.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting_started-cn.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">快速上手指南</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Cobrapy中文文档</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./getting_started-cn.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">快速上手指南</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./configuration-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">全局配置</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./building_model-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">构建模型</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./io-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">读写模型</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simulating-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">使用FBA进行模拟</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./deletions-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">模拟删除</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./phenotype_phase_plane-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">生长包线</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sampling-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">通量取样</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loopless-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">无循环FBA</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gapfilling-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">缺口填充</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./consistency-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">一致性测试</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./media-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">生长培养基</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./solvers-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">求解器</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./constraints_objectives-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">量身定制的约束、变量和目标</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dfba-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">在COBRApy动态通量平衡分析(dFBA)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./faq-cn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">常见问题解答</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#加载模型并检查它" id="toc-加载模型并检查它" class="nav-link active" data-scroll-target="#加载模型并检查它"><span class="header-section-number">1.1</span> 加载模型并检查它</a></li>
+  <li><a href="#反应" id="toc-反应" class="nav-link" data-scroll-target="#反应"><span class="header-section-number">1.2</span> 反应</a></li>
+  <li><a href="#代谢产物" id="toc-代谢产物" class="nav-link" data-scroll-target="#代谢产物"><span class="header-section-number">1.3</span> 代谢产物</a></li>
+  <li><a href="#基因" id="toc-基因" class="nav-link" data-scroll-target="#基因"><span class="header-section-number">1.4</span> 基因</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">快速上手指南</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="加载模型并检查它" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="加载模型并检查它"><span class="header-section-number">1.1</span> 加载模型并检查它</h2>
+<p>我们首先从两个最简单的内置模型开始。它们是<em>沙门氏菌</em>的模型，<em>大肠杆菌</em>的模型，以及一个叫做“教材”（textbook）的模型。<code>textbook</code> 模型描述了<em>大肠杆菌</em>的核心代谢。</p>
+<div id="cell-3" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:22.711124900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:20.723933300Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cobra</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cobra.io <span class="im">import</span> load_model</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># "iJO1366" and "salmonella" are also valid arguments</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">"textbook"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>cobrapy模型里的反应、代谢物和基因是一种叫做 “cobra.DictList”的特殊列表, 并且每一个分别以 <code>cobra.Reaction</code>, <code>cobra.Metabolite</code> 和<code>cobra.Gene</code>为对象。</p>
+<div id="cell-5" class="cell" data-scrolled="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:26.495209700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:26.443173300Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(model.reactions))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(model.metabolites))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(model.genes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>95
+72
+137</code></pre>
+</div>
+</div>
+<p>当我们使用<a href="https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/">Jupyter notebook</a>时，这些信息将会以表格形式呈现。</p>
+<div id="cell-7" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:29.368193500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:29.302917400Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+        
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td><strong>Name</strong></td>
+<td>e_coli_core</td>
+</tr>
+<tr class="even">
+<td><strong>Memory address</strong></td>
+<td>124eb3a3050</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of metabolites</strong></td>
+<td>72</td>
+</tr>
+<tr class="even">
+<td><strong>Number of reactions</strong></td>
+<td>95</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of genes</strong></td>
+<td>137</td>
+</tr>
+<tr class="even">
+<td><strong>Number of groups</strong></td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td><strong>Objective expression</strong></td>
+<td>1.0*Biomass_Ecoli_core - 1.0*Biomass_Ecoli_core_reverse_2cdba</td>
+</tr>
+<tr class="even">
+<td><strong>Compartments</strong></td>
+<td>cytosol, extracellular</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>就像常规列表一样， <code>DictList</code>中的对象可以通过索引检索。例如，要获得该模型中的第30个反应（ (at index 29 because of <a href="https://en.wikipedia.org/wiki/Zero-based_numbering">0-indexing</a>):</p>
+<div id="cell-9" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:31.802888500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:31.756579Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model.reactions[<span class="dv">29</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+        
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Reaction identifier</strong></td>
+<td>EX_glu__L_e</td>
+</tr>
+<tr class="even">
+<td><strong>Name</strong></td>
+<td>L-Glutamate exchange</td>
+</tr>
+<tr class="odd">
+<td><strong>Memory address</strong></td>
+<td>0x124ecc53fd0</td>
+</tr>
+<tr class="even">
+<td><strong>Stoichiometry</strong></td>
+<td><p>glu__L_e --&gt;</p>
+<p>L-Glutamate --&gt;</p></td>
+</tr>
+<tr class="odd">
+<td><strong>GPR</strong></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Lower bound</strong></td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td><strong>Upper bound</strong></td>
+<td>1000.0</td>
+</tr>
+</tbody>
+</table>
+
+        
+</div>
+</div>
+<p>此外，可以使用<code>DictList.get_by_id()</code> 函数按项目的<code>id</code>检索项目。例如，要获得胞质atp代谢产物对象（id为“atp_c”），我们可以执行以下操作：</p>
+<div id="cell-11" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:33.444904900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:33.395968700Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model.metabolites.get_by_id(<span class="st">"atp_c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+        
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td><strong>Metabolite identifier</strong></td>
+<td>atp_c</td>
+</tr>
+<tr class="even">
+<td><strong>Name</strong></td>
+<td>ATP</td>
+</tr>
+<tr class="odd">
+<td><strong>Memory address</strong></td>
+<td>0x124ecd18c90</td>
+</tr>
+<tr class="even">
+<td><strong>Formula</strong></td>
+<td>C10H12N5O13P3</td>
+</tr>
+<tr class="odd">
+<td><strong>Compartment</strong></td>
+<td>c</td>
+</tr>
+<tr class="even">
+<td><strong>In 13 reaction(s)</strong></td>
+<td>PPS, PYK, Biomass_Ecoli_core, PPCK, GLNS, PFK, ATPS4r, PGK, SUCOAS, GLNabc, ACKr, ATPM, ADK1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>作为额外的收获，具有交互式shell（如IPython）的用户将能够完成制表，列出列表中的元素。虽然这不是大多数代码的推荐行为，因为id中可能存在“-”等字符，但在交互式提示中这非常有用：</p>
+<div id="cell-13" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:35.038966Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:34.996791300Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model.reactions.EX_glc__D_e.bounds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>(-10.0, 1000.0)</code></pre>
+</div>
+</div>
+</section>
+<section id="反应" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="反应"><span class="header-section-number">1.2</span> 反应</h2>
+<p>我们将以葡萄糖-6-磷酸异构酶参与的葡萄糖 6-磷酸和果糖 6-磷酸相互转化反应作为演示对象。在我们的测试的模型中，该反应的反应 ID 是 PGI。</p>
+<div id="cell-16" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:37.773739500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:37.704704100Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pgi <span class="op">=</span> model.reactions.get_by_id(<span class="st">"PGI"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pgi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+        
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Reaction identifier</strong></td>
+<td>PGI</td>
+</tr>
+<tr class="even">
+<td><strong>Name</strong></td>
+<td>glucose-6-phosphate isomerase</td>
+</tr>
+<tr class="odd">
+<td><strong>Memory address</strong></td>
+<td>0x124ecca7c10</td>
+</tr>
+<tr class="even">
+<td><strong>Stoichiometry</strong></td>
+<td><p>g6p_c &lt;=&gt; f6p_c</p>
+<p>D-Glucose 6-phosphate &lt;=&gt; D-Fructose 6-phosphate</p></td>
+</tr>
+<tr class="odd">
+<td><strong>GPR</strong></td>
+<td>b4025</td>
+</tr>
+<tr class="even">
+<td><strong>Lower bound</strong></td>
+<td>-1000.0</td>
+</tr>
+<tr class="odd">
+<td><strong>Upper bound</strong></td>
+<td>1000.0</td>
+</tr>
+</tbody>
+</table>
+
+        
+</div>
+</div>
+<p>我们可以将全名和催化的反应视为字符串</p>
+<div id="cell-18" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:38.692199700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:38.645196600Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pgi.name)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pgi.reaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>glucose-6-phosphate isomerase
+g6p_c &lt;=&gt; f6p_c</code></pre>
+</div>
+</div>
+<p>因为 <code>pgi</code> 是可逆的，所以我们可以通过<code>pgi.lower_bound</code> &lt; 0 和 <code>pgi.upper_bound</code>&gt; 0来查看该反应的下限和上限</p>
+<div id="cell-20" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:39.486998Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:39.454137100Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pgi.lower_bound, <span class="st">"&lt; pgi &lt;"</span>, pgi.upper_bound)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pgi.reversibility)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-1000.0 &lt; pgi &lt; 1000.0
+True</code></pre>
+</div>
+</div>
+<p>反应的下限和上限被修改时，其可逆性属性也会自动更新。操作边界的首选方法是使用<code>reaction.bounds</code>，例如</p>
+<div id="cell-22" class="cell" data-scrolled="true" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:40.281603100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:40.248629700Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>old_bounds <span class="op">=</span> pgi.bounds</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pgi.bounds <span class="op">=</span> (<span class="dv">0</span>, <span class="fl">1000.0</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pgi.lower_bound, <span class="st">"&lt; pgi &lt;"</span>, pgi.upper_bound)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Reversibility after modification:"</span>, pgi.reversibility)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>pgi.bounds <span class="op">=</span> old_bounds</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Reversibility after resetting:"</span>, pgi.reversibility)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0 &lt; pgi &lt; 1000.0
+Reversibility after modification: False
+Reversibility after resetting: True</code></pre>
+</div>
+</div>
+<p>还可以使用<code>reaction.lower_bound</code> 或 <code>reaction.upper_bound</code>一次修改一个边界。这种方法没有使用 <code>reaction.bounds</code>同时设置两个边界的方法实用，因为用户可能会不小心设置下限高于上限（反之亦然）。如果出现下限高于上限（反之亦然），则会导致错误。</p>
+<div id="cell-24" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:41.778781800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:41.219453800Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>old_bounds <span class="op">=</span> pgi.bounds</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Upper bound prior to setting new lower bound:'</span>, pgi.upper_bound)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>pgi.lower_bound <span class="op">=</span> <span class="dv">1100</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Upper bound after setting new lower bound:'</span>, pgi.upper_bound)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>pgi.bounds <span class="op">=</span> old_bounds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Upper bound prior to setting new lower bound: 1000.0</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: The lower bound must be less than or equal to the upper bound (1100 &lt;= 1000.0).</code></pre>
+</div>
+</div>
+<p>我们需要确保反应是质量平衡的。如果反应不满足质量平衡，则该函数会返回元素；如果它返回为空，则表示反应是质量平衡的。</p>
+<div id="cell-26" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:51.938565800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:51.925419300Z&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pgi.check_mass_balance()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>{}</code></pre>
+</div>
+</div>
+<p>为了添加代谢物，我们传入一个带有代谢物对象及其系数的 <code>dict</code></p>
+<div id="cell-28" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:53.728565200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:53.715894700Z&quot;}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pgi.add_metabolites({model.metabolites.get_by_id(<span class="st">"h_c"</span>): <span class="op">-</span><span class="dv">1</span>})</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pgi.reaction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>'g6p_c + h_c &lt;=&gt; f6p_c'</code></pre>
+</div>
+</div>
+<p>反应不再保持质量平衡</p>
+<div id="cell-30" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:54.706244Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:54.689379Z&quot;}" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pgi.check_mass_balance()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>{'charge': -1.0, 'H': -1.0}</code></pre>
+</div>
+</div>
+<p>我们可以去除代谢物，反应将再次平衡。</p>
+<div id="cell-32" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:55.657553100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:55.612716300Z&quot;}" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pgi.subtract_metabolites({model.metabolites.get_by_id(<span class="st">"h_c"</span>): <span class="op">-</span><span class="dv">1</span>})</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pgi.reaction)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pgi.check_mass_balance())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>g6p_c &lt;=&gt; f6p_c
+{}</code></pre>
+</div>
+</div>
+<p>也可以从字符串构建反应。但是，在 执行此操作时必须小心，以确保反应 ID 与模型中的反应 ID 匹配。箭头的方向也用于更新上限和下限。</p>
+<div id="cell-34" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:56.682936500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:56.659935Z&quot;}" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pgi.reaction <span class="op">=</span> <span class="st">"g6p_c --&gt; f6p_c + h_c + green_eggs + ham"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>unknown metabolite 'green_eggs' created
+unknown metabolite 'ham' created</code></pre>
+</div>
+</div>
+<div id="cell-35" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:57.154167200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:57.127136400Z&quot;}" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pgi.reaction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>'g6p_c --&gt; f6p_c + green_eggs + h_c + ham'</code></pre>
+</div>
+</div>
+<div id="cell-36" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:57.567738700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:57.521543500Z&quot;}" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pgi.reaction <span class="op">=</span> <span class="st">"g6p_c &lt;=&gt; f6p_c"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>pgi.reaction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>'g6p_c &lt;=&gt; f6p_c'</code></pre>
+</div>
+</div>
+</section>
+<section id="代谢产物" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="代谢产物"><span class="header-section-number">1.3</span> 代谢产物</h2>
+<p>我们将以胞质 atp 作为我们的代谢物，它在我们的测试模型中的 id 为<code>"atp_c"</code>。</p>
+<div id="cell-39" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:12:59.456536100Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:12:59.392973900Z&quot;}" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>atp <span class="op">=</span> model.metabolites.get_by_id(<span class="st">"atp_c"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>atp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+
+        
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td><strong>Metabolite identifier</strong></td>
+<td>atp_c</td>
+</tr>
+<tr class="even">
+<td><strong>Name</strong></td>
+<td>ATP</td>
+</tr>
+<tr class="odd">
+<td><strong>Memory address</strong></td>
+<td>0x124ecd18c90</td>
+</tr>
+<tr class="even">
+<td><strong>Formula</strong></td>
+<td>C10H12N5O13P3</td>
+</tr>
+<tr class="odd">
+<td><strong>Compartment</strong></td>
+<td>c</td>
+</tr>
+<tr class="even">
+<td><strong>In 13 reaction(s)</strong></td>
+<td>PPS, PYK, Biomass_Ecoli_core, PPCK, GLNS, PFK, ATPS4r, PGK, SUCOAS, GLNabc, ACKr, ATPM, ADK1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>我们可以直接把代谢物名称和隔室（在本例中为胞质溶胶）以字符串的形式打印出来。</p>
+<div id="cell-41" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:00.697216500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:00.681142100Z&quot;}" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(atp.name)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(atp.compartment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ATP
+c</code></pre>
+</div>
+</div>
+<p>我们可以看到 ATP 在我们的模型中是一种带电分子。</p>
+<div id="cell-43" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:01.783471600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:01.767728400Z&quot;}" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>atp.charge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>-4</code></pre>
+</div>
+</div>
+<p>我们也可以看到代谢物的化学式。</p>
+<div id="cell-45" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:02.658278500Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:02.641326300Z&quot;}" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(atp.formula)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>C10H12N5O13P3</code></pre>
+</div>
+</div>
+<p>反应属性给出了使用给定代谢物的所有反应的<code>frozenset</code> 。我们可以用它来计算使用 atp 的反应数量。</p>
+<div id="cell-47" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:03.447087800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:03.428402400Z&quot;}" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(atp.reactions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>13</code></pre>
+</div>
+</div>
+<p>葡萄糖 6-磷酸等代谢物将参与较少的反应。</p>
+<div id="cell-49" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:04.314580Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:04.287627700Z&quot;}" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>model.metabolites.get_by_id(<span class="st">"g6p_c"</span>).reactions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>frozenset({&lt;Reaction Biomass_Ecoli_core at 0x124ecca4a50&gt;,
+           &lt;Reaction G6PDH2r at 0x124ecc50090&gt;,
+           &lt;Reaction GLCpts at 0x124ece28190&gt;,
+           &lt;Reaction PGI at 0x124ecca7c10&gt;})</code></pre>
+</div>
+</div>
+</section>
+<section id="基因" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="基因"><span class="header-section-number">1.4</span> 基因</h2>
+<p><code>gene_reaction_rule</code>是该反应活跃的基因要求的布尔值表示，<a href="http://dx.doi.org/doi:10.1038/nprot.2011.308">Schellenberger et al 2011 Nature Protocols 6(9):1290-307</a>.GPR作为GPR类存储在反应的GPR中。它的字符串表示形式存储为 Reaction 对象的gene_reaction_rule。</p>
+<div id="cell-52" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:05.786474300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:05.731952600Z&quot;}" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>gpr <span class="op">=</span> pgi.gpr</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gpr)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>gpr_string <span class="op">=</span> pgi.gene_reaction_rule</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gpr_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>b4025
+b4025</code></pre>
+</div>
+</div>
+<p>相应的基因对象也存在。这些对象由反应本身以及模型追踪。</p>
+<div id="cell-54" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:06.803161Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:06.771113900Z&quot;}" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>pgi.genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>frozenset({&lt;Gene b4025 at 0x124eccbd1d0&gt;})</code></pre>
+</div>
+</div>
+<div id="cell-55" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:07.663652800Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:07.642974700Z&quot;}" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>pgi_gene <span class="op">=</span> model.genes.get_by_id(<span class="st">"b4025"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>pgi_gene</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+
+        
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td><strong>Gene identifier</strong></td>
+<td>b4025</td>
+</tr>
+<tr class="even">
+<td><strong>Name</strong></td>
+<td>pgi</td>
+</tr>
+<tr class="odd">
+<td><strong>Memory address</strong></td>
+<td>0x124eccbd1d0</td>
+</tr>
+<tr class="even">
+<td><strong>Functional</strong></td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td><strong>In 1 reaction(s)</strong></td>
+<td>PGI</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>每个基因都追踪它催化的反应。</p>
+<div id="cell-57" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:08.730545600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:08.713682300Z&quot;}" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>pgi_gene.reactions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>frozenset({&lt;Reaction PGI at 0x124ecca7c10&gt;})</code></pre>
+</div>
+</div>
+<p>如有必要，改变gene_reaction_rule将创建新的基因对象并更新所有关系。</p>
+<div id="cell-59" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:10.140873900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:09.804589700Z&quot;}" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>pgi.gene_reaction_rule <span class="op">=</span> <span class="st">"(spam or eggs)"</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>pgi.genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>frozenset({&lt;Gene eggs at 0x124eea1bed0&gt;, &lt;Gene spam at 0x124eea1bfd0&gt;})</code></pre>
+</div>
+</div>
+<div id="cell-60" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:10.239018700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:10.223384800Z&quot;}" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>pgi_gene.reactions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>frozenset()</code></pre>
+</div>
+</div>
+<p>新创建的基因也能添加到模型中</p>
+<div id="cell-62" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:11.165960200Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:11.143707800Z&quot;}" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>model.genes.get_by_id(<span class="st">"spam"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+
+        
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td><strong>Gene identifier</strong></td>
+<td>spam</td>
+</tr>
+<tr class="even">
+<td><strong>Name</strong></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Memory address</strong></td>
+<td>0x124eea1bfd0</td>
+</tr>
+<tr class="even">
+<td><strong>Functional</strong></td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td><strong>In 1 reaction(s)</strong></td>
+<td>PGI</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><code>knock_out_model_genes</code>函数能够评估 GPR，并在反应被敲除时将上限和下限设置为 0。</p>
+<div id="cell-64" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:12.110904900Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:12.094602Z&quot;}" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>cobra.manipulation.knock_out_model_genes(</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    model, [<span class="st">"spam"</span>])</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"after 1 KO: </span><span class="sc">%4d</span><span class="st"> &lt; flux_PGI &lt; </span><span class="sc">%4d</span><span class="st">"</span> <span class="op">%</span> (pgi.lower_bound, pgi.upper_bound))</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>cobra.manipulation.knock_out_model_genes(</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    model, [<span class="st">"eggs"</span>])</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"after 2 KO:  </span><span class="sc">%4d</span><span class="st"> &lt; flux_PGI &lt; </span><span class="sc">%4d</span><span class="st">"</span> <span class="op">%</span> (pgi.lower_bound, pgi.upper_bound))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>after 1 KO: -1000 &lt; flux_PGI &lt; 1000
+after 2 KO:     0 &lt; flux_PGI &lt;    0</code></pre>
+</div>
+</div>
+<p>当在上下文中敲除模型基因时，它在离开上下文时会相反。</p>
+<p>很多时候，人们希望对模型进行一些小的更改并评估这些更改的影响。例如，我们可能希望按顺序敲除所有反应，看看这对目标函数有什么影响。一种方法是在每次敲除之前使用 <code>model.copy()</code> 创建模型的新副本。然而，即使使用小型模型，这也是一种非常缓慢的方法，因为模型是相当复杂的对象。更好的做法是进行敲除、优化，然后手动重置反应边界，然后再进行下一个反应。然而，由于这是一个非常常见的场景，cobrapy 允许我们将模型用作上下文，以自动恢复更改。</p>
+<div id="cell-67" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:13.807963Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:13.635974100Z&quot;}" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(<span class="st">'textbook'</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> reaction <span class="kw">in</span> model.reactions[:<span class="dv">5</span>]:</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model <span class="im">as</span> model:</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>        reaction.knock_out()</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>        model.optimize()</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'</span><span class="sc">%s</span><span class="st"> blocked (bounds: </span><span class="sc">%s</span><span class="st">), new growth rate </span><span class="sc">%f</span><span class="st">'</span> <span class="op">%</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>              (reaction.<span class="bu">id</span>, <span class="bu">str</span>(reaction.bounds), model.objective.value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ACALD blocked (bounds: (0, 0)), new growth rate 0.873922
+ACALDt blocked (bounds: (0, 0)), new growth rate 0.873922
+ACKr blocked (bounds: (0, 0)), new growth rate 0.873922
+ACONTa blocked (bounds: (0, 0)), new growth rate -0.000000
+ACONTb blocked (bounds: (0, 0)), new growth rate -0.000000</code></pre>
+</div>
+</div>
+<p>如果我们看一下那些被敲击的反应，就会发现它们的界限都被恢复了。</p>
+<div id="cell-69" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:15.132136600Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:15.091653400Z&quot;}" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>[reaction.bounds <span class="cf">for</span> reaction <span class="kw">in</span> model.reactions[:<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>[(-1000.0, 1000.0),
+ (-1000.0, 1000.0),
+ (-1000.0, 1000.0),
+ (-1000.0, 1000.0),
+ (-1000.0, 1000.0)]</code></pre>
+</div>
+</div>
+<p>上下文也支持被嵌套</p>
+<div id="cell-71" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:16.260110300Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:16.227079300Z&quot;}" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'original objective: '</span>, model.objective.expression)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model:</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    model.objective <span class="op">=</span> <span class="st">'ATPM'</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'print objective in first context:'</span>, model.objective.expression)</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> model:</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>        model.objective <span class="op">=</span> <span class="st">'ACALD'</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'print objective in second context:'</span>, model.objective.expression)</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'objective after exiting second context:'</span>,</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>          model.objective.expression)</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'back to original objective:'</span>, model.objective.expression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>original objective:  1.0*Biomass_Ecoli_core - 1.0*Biomass_Ecoli_core_reverse_2cdba
+print objective in first context: 1.0*ATPM - 1.0*ATPM_reverse_5b752
+print objective in second context: 1.0*ACALD - 1.0*ACALD_reverse_fda2b
+objective after exiting second context: 1.0*ATPM - 1.0*ATPM_reverse_5b752
+back to original objective: 1.0*Biomass_Ecoli_core - 1.0*Biomass_Ecoli_core_reverse_2cdba</code></pre>
+</div>
+</div>
+<p>大多数修改模型的方法都像这样支持，包括添加和去除反应和代谢物以及设定目标。支持的方法和函数在相应的文档中提到了这一点。</p>
+<p>虽然它没有任何实际效果，但为了语法上的方便，也可以使用与上下文外部不同的名称来引用模型。如</p>
+<div id="cell-74" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-13T09:13:18.064470700Z&quot;,&quot;start_time&quot;:&quot;2024-01-13T09:13:18.045948200Z&quot;}" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> model <span class="im">as</span> inner:</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    inner.reactions.PFK.knock_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="前言">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">前言</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./configuration-cn.html" class="pagination-link" aria-label="全局配置">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">全局配置</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
